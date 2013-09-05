@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>JavaScript test</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+</head>
+<style type="text/css">
+    #hover,#hover-debounce{
+        height: 50px;
+        width: 50px;
+        background-color: #F00;
+    }
+    #msg,#msg-debounce{
+        width: 200px;
+        float: left;
+    }
+</style>
+<body>
+    通常，开发人员会在有用户交互参与的地方添加事件，而往往这种事件会被频繁触发。想象一下窗口的resize事件或者是一个元素的onmouseover事件 - 他们触发时，执行的非常迅速，并且触发很多次。如果你的回调过重，你可能使浏览器死掉。
+
+    使用underscore.js的一个函数来实例说明
+    <div id="hover">hover me</div>
+    <div id="hover-debounce">hover me,i am debounce</div>
+    <div id="msg">没有防抖的msg输出</div>
+    <div id="msg-debounce">有防抖机制的msg输出</div>
+</body>
+<script type="text/javascript">
+function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+        var context = this, args = arguments;
+        var later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+}
+var hover = document.getElementById('hover'),
+    hoverDebounce = document.getElementById('hover-debounce'),
+    msg = document.getElementById('msg'),
+    msgDebounce = document.getElementById('msg-debounce');
+hover.onmousemove = function () {
+    msg.innerHTML += 'hover<br/>'
+}
+hoverDebounce.onmousemove = debounce(function () {
+    msgDebounce.innerHTML += 'hover<br/>'
+}, 200);
+</script>
+</html>
