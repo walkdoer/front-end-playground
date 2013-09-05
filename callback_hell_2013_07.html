@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>JavaScript test</title>
+    <meta charset="utf-8">
+</head>
+<body>
+</body>
+<script type="text/javascript">
+function getData(cb) {
+    cb(null, 1);
+}
+function getMoreData(param, cb) {
+    cb(null, param + 1); //We don't really care about the "result" variable
+}
+function finallyGetLastData(opts, cb) {
+    cb(null, 400); //We don't care about "result" or "changedResults", the callback will already have them pre-set
+}
+
+function finallyGetLastDataCB(result, changedResults, err, finalResults) {
+        var diff = changedResults - result;
+        console.log("Result: " + result + " - Final Result: " + finalResults);
+}
+
+function getMoreDataCB(result, err, moreResults) {
+   var changedResults = result * 2;
+   finallyGetLastData({
+            first : result,
+            second : moreResults
+    }, partial(finallyGetLastDataCB, [result, changedResults]));
+}
+
+function mainFunction() {
+    getData(function(err, result){
+        getMoreData(result, partial(getMoreDataCB, [result]));
+   });
+}
+function partial(func, args) {
+    return function(){ 
+        for(var i in arguments) {
+            args.push(arguments[i]);
+        }
+        return func.apply(this, args);
+    }
+}
+mainFunction();
+</script>
+</html>
