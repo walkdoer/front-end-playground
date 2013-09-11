@@ -39,6 +39,7 @@ var Teacher = function (firstName, lastName, age, title) {
     Person.call(this, firstName, lastName, age);
     this.title = title;
 }
+//原型继承
 Teacher.prototype = new Person();
 
 var teacher = new Teacher('andrew', 'zhang', 28, '幼儿园教师');
