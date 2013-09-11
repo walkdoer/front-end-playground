@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>JavaScript inheritance</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script>
+var utility = {
+    name: 'original utility',
+    getName: function () {
+        console.debug(['this is ', this.name].join(''));
+    }
+};
+
+var myUtility = Object.create(utility, {
+    name: {
+        value: 'andrewUtility'
+    }
+    //注意这里不能直接写 name: 'andrewUtility', 这样会报错
+    //Uncaught TypeError: Property description must be an object: andrewUtility
+});
+
+utility.getName(); // this is original utility
+myUtility.getName(); // this is andrewUtility
+
+//修改继承对象的方法，会切断与原来方法的联系，是不会影响到原方法
+myUtility.getName = function () {
+    console.debug(['brand new method provide by ', this.name].join(''));
+}
+utility.getName(); // this is original utility
+myUtility.getName(); // brand new method provide by andrewUtility
+//从输出结果可以看出，对原方法是不影响的, 
+//所以你就可以随心所欲的修改继承而来的新对象，不必考虑对原对象的影响
+
+</script>
+</html>

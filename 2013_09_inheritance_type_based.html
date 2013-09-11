@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>JavaScript inheritance</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script>
+/**
+ * Type-based 继承 与Object-based继承类似，都是依靠prototype来继承原对象
+ * 不过 type-based 需要构造函数来帮忙
+ * 
+ */
+
+var MyError = function(message) {
+    this.message = message;
+};
+//通过创建一个Error的实例，并将这个实例赋值给 MyError的原型，以此获得Error（super type）的方法和属性
+MyError.prototype = new Error();
+
+var err = new MyError('May god help you');
+
+console.debug(err instanceof Error); //true
+console.debug(err instanceof MyError); //true
+
+//type-based 继承最好用在开发者定义的构造函数，而不是原生的javascript
+//另外，type-based的继承需要两步: 原型继承 和 构造函数的继承
+
+var Person = function(firstName, lastName, age){
+    this.name = [firstName,lastName].join(' ');
+    this.age = age;
+};
+var Teacher = function (firstName, lastName, age, title) {
+    //构造函数继承
+    Person.call(this, firstName, lastName, age);
+    this.title = title;
+}
+Teacher.prototype = new Person();
+
+var teacher = new Teacher('andrew', 'zhang', 28, '幼儿园教师');
+
+console.debug(teacher.name); //andrew zhang 
+</script>
+</html>
