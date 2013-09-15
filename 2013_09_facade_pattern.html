@@ -6,8 +6,13 @@
     <script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
 </head>
 <style type="text/css">
+.test{
+    background-color: red;
+    padding: 40px;
+}
 </style>
 <body>
+<div id="my-div">click to remove</div>
 </body>
 <script type="text/javascript">
 /**
@@ -17,5 +22,30 @@
  * 如果继承不适合，那么外观模式可以是你的第二个想到的东西
  * 由于你不能继承DOM,所以你只能创建一个Facade来包装dom
  */
+
+var DomWrapper = function (element) {
+    this.element = element;
+};
+
+DomWrapper.prototype.addClass = function (cls) {
+    this.element.className += ' ' + cls;
+};
+
+DomWrapper.prototype.remove = function () {
+    this.element.parentNode.removeChild(this.element);
+};
+
+DomWrapper.prototype.click = function (callback) {
+    this.element.onclick = callback;
+};
+//使用一下
+
+var wrapper = new DomWrapper(document.getElementById('my-div'));
+
+wrapper.addClass('test');
+
+wrapper.click(function (e) {
+    wrapper.remove();
+})
 </script>
 </html>
