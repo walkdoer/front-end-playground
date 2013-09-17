@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>this is title</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+</head>
+<style type="text/css">
+</style>
+<body>
+    <span id="bad">click me to test</span>
+    <span id="good">click me to test</span>
+</body>
+<script type="text/javascript">
+
+/**
+ * 在文档中见到一个闭包的例子，里面是这样子描述的：
+ *   onclick 处理函数在函数 foo 作用域内形成闭包，持有 foo 作用域引用，进而持有 element 引用,
+ *   而 element 又持有该闭包引用，造成循环引用，从而无法被垃圾回收机制回收
+ *
+ * 疑问就是在这个例子中，我通过断点观察，闭包中是无法访问到 element 这个变量，
+ * 既然如此，那就是在闭包中并没有持有element的引用，为何会造成循环引用的问题呢？
+ */
+
+//Bad
+function badFoo(element, a, b) {
+    element.onclick = function () {
+        //如果在这里面使用了element元素的话的确会造成循环引用
+        console.log(a, b);
+    };
+}
+ 
+//Good
+function foo(element, a, b) {
+    element.onclick = bar(a, b);
+}
+ 
+function bar(a, b) {
+    return function () { 
+        console.log(a, b, element); //提示：Uncaught ReferenceError: element is not defined 
+    };
+}
+
+var eleBad = document.getElementById('bad'),
+    eleGood = document.getElementById('good');
+badFoo(eleBad, 5, 6);
+foo(eleGood, 5, 6);
+</script>
+</html>
