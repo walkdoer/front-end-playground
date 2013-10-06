@@ -3,7 +3,9 @@
 <head>
     <title>继承</title>
     <meta charset="utf-8">
+    <!--
     <script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+-->
 </head>
 <style type="text/css">
 </style>
@@ -71,5 +73,54 @@ var author = new Author('Tom', 'Human is Dead');
 
 console.dir(jack);
 console.dir(author);
+
+
+function extend(subClass, superClass) {
+    //空函数F = function () {} 是为了避免创建超类的新实例，超类可能比较庞大，
+    //而且超类的构造函数可能会有一些耗时较长的运算
+    var F = function () {};
+    F.prototype = superClass.prototype;
+    subClass.prototype = new F();
+    subClass.prototype.constructor = subClass;
+}
+
+var Animal, Mammal, Human; 
+
+Animal = function Animal(name, type) {
+    this.name = name;
+    this.type = type;
+};
+Animal.prototype.getName = function getName() {
+    return this.name;
+};
+Animal.prototype.getType = function getType() {
+    return this.type;
+}
+Mammal = function Mammal(name) {
+    Animal.call(this, name, 'mammal');
+};
+extend(Mammal, Animal);
+
+Mammal.prototype.eat = function eat(food) {
+    console.debug('eat ' + food);
+};
+Human = function Human(name, race) {
+    Mammal.call(this, name, 'mammal');
+    this.race = race;
+};
+extend(Human, Mammal);
+Human.prototype.say = function say(word) {
+    console.debug('say ' + word);
+};
+Human.prototype.getRace = function getRace () {
+    return this.race;
+}
+
+var animal = new Animal('蟑螂', '昆虫'),
+    mammal = new Mammal('海豚'),
+    human = new Human('张伟', '亚洲人');
+console.debug(animal);
+console.debug(mammal);
+console.debug(human);
 </script>
 </html>
