@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>继承</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+var Person = function (name) {
+    this.name = name;
+};
+Person.prototype.getName = function () {
+    return this.name;
+};
+/**
+ * 定义一个构造函数时，其默认的prototype对象是一个Object类型的实例，其constructor自动设置为该构造函数本身
+ * 如果手工设置另外一个对象，那么新对象自然不会具有原对象constructor的值. 
+ *
+ *   SubClass.prototype.constructor  = SubClass
+ *
+ * 可以对比 Person.prototype.constructor 和 Book.prototype.constructor 之间的区别
+ *  Person.prototype.constructor 就是构造函数本身，即Person
+ *  Book.prototype.constructor 就是 Object构造函数,  Book.prototype.constructor === Object //true
+ */
+var Book = function (name) {
+    this.name = name
+};
+Book.prototype = {
+    getName: function () {
+        return this.name;
+    }
+};
+console.debug(Person.prototype.constructor === Person); // true
+console.debug(Book.prototype.constructor === Object);  // true
+
+/**
+ * 创建对象的时候，javascript自动将其原型对象设置其构造函数的prototype属性所指的对象，而构造函数本身也是一个对象，它有自己的
+ * 原型对象，但是这个原型对象并不是prototype指向的那个对象，函数的构造函数是Function，
+ * 所以构造函数的原型是Function Object指向的那个对象。
+ *
+ * 创建Author对象的时候，Author的原型对象就是构造函数的prototype属性(Author.protoype),也就是Person对象。
+ * 而Author构造函数的原型对象是Function.prototype指向的对象.
+ */
+var Author = function (name, book) {
+    Person.call(this, name);
+    this.book = book;
+}
+Author.prototype = new Person();
+/** 
+ * 改变了原型，会覆盖了源对象Constructor的值，所以要重新指向构造函数Author
+ * 
+ * var author = new Author('name', 'book name');
+ * console.debug(author.constructor === Author);
+ *
+ * 但是如果不重新指向构造函数，那么就是使用prototype指向的对象的构造函数，例如:
+ * 注释掉 （Author.prototype.constructor = Author;） 这一句代码，重新运行
+ * 然后创建一个Author的实例 author
+ * author.constructor 就是其prototype指向的对象的构造函数，也就是Person
+ */
+Author.prototype.constructor = Author;
+Author.prototype.getBook = function () {
+    return this.book;
+}
+
+var jack = new Person('jack');
+var author = new Author('Tom', 'Human is Dead');
+
+console.dir(jack);
+console.dir(author);
+</script>
+</html>
