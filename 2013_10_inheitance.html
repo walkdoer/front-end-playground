@@ -82,6 +82,12 @@ function extend(subClass, superClass) {
     F.prototype = superClass.prototype;
     subClass.prototype = new F();
     subClass.prototype.constructor = subClass;
+
+    subClass.superClass = superClass.prototype;
+    //如果超类是Object自身
+    if (subClass.prototype.constructor === Object.prototype.constructor) {
+        superClass.prototype.constructor = superClass;
+    }
 }
 
 var Animal, Mammal, Human; 
