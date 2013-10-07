@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>类式继承与原型继承的对比</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+/*
+类式继承由于使用广泛，更容易被其他程序员理解
+原型继承更节省内存, 因为原型继承中，会共享没有被修改过的对象和方法
+同时也是因为这种共享，在修改引用类型（Array，Object）的时候，要新建，而不是在原来的基础上修改
+ */
+
+/**
+ * 原型继承的基础函数 clone
+ *
+ * 这个函数不是简陋，这是简洁，它的强大正蕴藏在它的简洁之中
+ */
+var clone = function clone (object) {
+    var F = function () {};
+    F.prototype = object;
+    return new F;
+};
+
+
+var Person = {
+    name: 'default name',
+    getName: function () {
+        return this.name;
+    },
+    setName: function (name) {
+        this.name = name;
+    }
+};
+
+var Author = clone(Person);
+Author.books = [];
+Author.getBooks = function () {
+    return this.books;
+};
+Author.addBook = function (book) {
+    if (this.books.length === 0) {
+        this.books = [];
+    }
+    this.books.push(book)
+}
+
+p1 = clone(Person);
+p1.setName('jim');
+p2 = clone(Person);
+p2.setName('tom');
+
+a1 = clone(Author);
+a1.setName('Mary');
+a1.addBook('War World 1');
+a1.addBook('War World 2');
+a1.addBook('War World 3');
+a2 = clone(Author);
+a2.setName('Steven');
+a2.addBook('Gun Fire 1');
+a2.addBook('Gun Fire 2');
+a2.addBook('Gun Fire 3');
+</script>
+</html>
