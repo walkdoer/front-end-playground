@@ -26,7 +26,7 @@
 function badFoo(element, a, b) {
     element.onclick = function () {
         //如果在这里面使用了element元素的话的确会造成循环引用
-        console.log(a, b);
+        console.log(a, b， element);
     };
 }
  

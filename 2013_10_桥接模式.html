@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>桥接模式</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+/*
+
+在设计API时，桥接模式可以弱化它与使用它的类和对象之间的耦合
+Gof ： 将抽象与其实现隔离开来，以便二者独立变化。
+对javascript这种事件驱动编程大有裨益
+
+ */
+function submitData (data) {
+    //...提交数据到服务器端...
+}
+$('#form').on('submit', function(e) {
+    var $form = $(this);
+    var data = $form.getFormData();
+    submitData(data);
+});
+
+/*
+是不是很熟悉的写法，其实这里的匿名函数就相当于一个Bridge, 可以拆分出来，看得更明显
+
+$('#form').on('submit', submitFormBridge);
+var submitFormBridge = function (e) {
+    var $form = $(this);
+    var data = $form.getFormData();
+    submitData(data);
+}
+
+这里的API就是submitData,如果submitData设计得不好，比如
+
+function submitData(form) {
+    var $form = $(this);
+    var data = $form.getFormData();
+    //...提交数据
+}
+$('#form').on('submit', submitData);
+
+这样子，就耦合得太严重了。事件处理与业务处理逻辑耦合在一起。
+而且在编写接口的时候，会考虑到 form参数的各种情况，那么这个时候就是针对实现编程，而不是针对接口编程了。
+API编写者痛苦，使用API的人也容易出错。
+*/
+
+</script>
+</html>
