@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>工厂模式（未完成）</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+/*
+
+简单工厂模式：将类的成员对象的创建工作交给一个外部对象，这个外部对象就是工厂
+真正工厂模式：一个将其成员对象的实例化推迟到子类中进行的类，不是象简单工厂模式那样子引入一个类
+ */
+
+//TODO 完善例子
+var XhrFactory = (function () {
+    var standard = {
+        createXhrObject: function () {
+            return new XMLHttpRequest();
+        }
+    },
+    activeXOld = {
+        createXhrObject: function () {
+            return new ActiveXObject('Msxml2.xml2');
+        }
+    },
+    activeXNew = {
+        createXhrObject: function () {
+            return new ActiveXObject('Microsoft.xmlhttp');
+        }
+    }
+    try {
+        standard.createXhrObject();
+        return standard;
+    } catch () {
+        try {
+            activeXNew.createXhrObject();
+            return activeXNew;
+        } catch () {
+            try {
+                activeXOld.createXhrObject();
+                return activeXOld;
+            } catch () {
+                throw new Error('No Support');
+            }
+        }
+    }
+})();
+</script>
+</html>
