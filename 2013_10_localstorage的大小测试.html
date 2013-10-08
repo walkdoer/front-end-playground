@@ -4,6 +4,23 @@
 </head>
 <body>
 <div id="output"></div>
+
+
+android:
+
+   * uc browser: 2621435  = 2.5M
+
+
+
+   * chrome: 2621435 = 2.5M
+
+
+PC (os x):
+
+
+   * chrome: 5242875 = 5M
+   * safari: 2621435 = 2.5M
+
 <script>
 function log( msg ) {
     document.getElementById( 'output' ).innerHTML += msg + '<br>';
@@ -51,7 +68,7 @@ while ( off ) {
     off = Math.floor( off / 2 );
 }
  
-log( 'limit: ' + limit );
+log( 'limit: ' + limit + ' = ' + (limit/ 1024 / 1024).toFixed(1) + 'M');
  
 </script>
 </body>
