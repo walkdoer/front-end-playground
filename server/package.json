@@ -1,0 +1,19 @@
+{
+    "name": "javascript skill",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+        "grunt": "~0.4.0",
+        "grunt-contrib-jshint": ">=0.1.0",
+        "grunt-contrib-qunit": ">=0.1.0",
+        "grunt-contrib-watch": ">=0.3.1",
+        "glob-whatev": ">=0.1.8",
+        "express": "3.x",
+        "uglify-js": ">=2.2.4",
+        "cmd-util": ">=0.2.0",
+        "commander": ">= 1.1.1",
+        "marked": ">= 0.2.8",
+        "socket.io": ">=0.9.16",
+        "colors": ">=0.6.1"
+    }
+}
