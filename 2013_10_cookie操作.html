@@ -73,5 +73,87 @@ var docCookies = {
 
 docCookies.setItem('name', 'andrew');
 docCookies.setItem('address', 'Guangzhou');
+
+
+/**
+获取所有cookie;
+
+  allCookies = document.cookie;
+
+返回的是 : "name=andrew; address=Guangzhou;"
+
+设置新的cookie
+
+  document.cookie = updatedCookie;
+
+ 这个赋值操作是一个增量，不会覆盖原来的cookie
+ 
+ 例如 document.cookie = 'home=Chaozhou';
+
+  这时document.cookie的值是"name=andrew; address=Guangzhou; home=Chaozhou"
+
+
+检测cookie是否启用
+
+navigator.cookieEnabled
+
+这个接口有些浏览器不支持 ，那就直接操作cookie来判断其支持
+
+cookie的生存周期和scope
+
+当用户退出浏览器，cookie的生命就结束了，这里区别于sessionStorage，因为cookie的范围不限制与一个浏览器窗口或者tab页，而且生命周期与浏览器进程同生共死
+
+max-age，设置了cookie的生存周期，浏览器会将cookie保存在文件中，直到过期了再删除。
+
+cookie的Scope
+
+这个是一段对cookie scope的描述：
+
+Google's Browser Security Handbook says: by default, cookie scope is limited to all URLs on the current host name - and not bound to port or protocol information. and some lines later There is no way to limit cookies to a single DNS name only [...] likewise, there is no way to limit them to a specific port. (Also, keep in mind, that IE does not factor port numbers into its same-origin policy at all.) 
+
+也就是说，cookie只收到domian 和 path的限制，与protocol (https或者http)和 port(端口号)是不相关的，也就是说，以下3个网站读取的都是同一个cookie
+
+https:// www.example.com
+http://www.example.com
+http://www.example.com:123
+
+控制cookie的范围：通过 domain  path 属性
+
+在 http://www.example.com/catalog/index.html 创建一个cookie之后，对于下面两个网址是可见的：
+
+     http://www.example.com/catalog/order.html  
+     http://www.example.com/catalog/widgets/index.html, 
+
+但是对于下面这个网址是不可见的，因为path不同
+    
+     http://www.example.com/about.html.
+
+如果将path设置为'/' 则对于整个 http://www.example.com都是可见的,这样子就有点类似与localStorage，而且所有请求都会带上该cookie
+
+设置domain属性，可以在子域名上共享cookie。例如
+
+如果要让 order.example.com可以读取 category.example.com 设置的cookie，那就要让选项如下
+
+   path='/' 
+   domain='.example.com'
+
+最后一个选项是 secure  设置是否是否仅仅通过 https请求
+
+
+设置cookie
+
+cookie不能有分号，逗号，空格，所以可以使用encodeURIComponent对字符串进行处理
+
+document.cookie = "version=" + encodeURIComponent(document.lastModified);
+
+ 删除cookie  
+
+set it again using the same name, path, and domain, specifying an arbitrary (or empty) value, and a max-age attribute of 0.
+
+参考 
+
+url定义：https://dvcs.w3.org/hg/url/raw-file/tip/Overview.html#urls
+             http://www.w3.org/TR/WD-html40-970708/htmlweb.html 
+ */
 </script>
 </html>
