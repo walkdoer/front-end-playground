@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>this is title</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+/*
+关于性能优化这一块，如果从前端的角度来看。
+
+首先要解决的就是页面的大小问题：
+
+页面越小，加载速度就越快。而css文件和script文件的位置对页面展现给用户的时间也是影响很大的
+
+总结了一下页面大小优化手段：
+
+1. html尽可能简单（例如减少html标签的嵌套，使用短html标签p,i,ul,li 等等）
+2. 不常用的页面采取分页（超链接跳转，需要刷新），或者异步加载的手段（可以免刷新）
+3. 线上使用压缩之后的html（可以减少不必要的空格和换行）
+4. css置顶，script置底，script还可以使用defer,async方式控制脚本执行时机
+5. 使用前端模板引擎
+
+页面大小问题优化之后就是页面资源网络请求的问题：
+
+一个网页的加载时间 80% 是消耗在 css，script，img这些资源的加载，减少请求个数就是优化的关键。而方法也较多，合并css和script文件，CSS Sprites ，baes64图片资源(inline image)等这些方法都是比较流行的.
+
+而减少了网络请求的个数之后，如何让剩下的这些不可避免的网络请求的响应更快呢？
+
+
+常见的方法有：
+
+  1. 减少DNS查询个数（合适安排domain个数，DNS查询时间在移动端还是又较为显著的影响）
+  2. 避免页面跳转
+  3. 缓存ajax
+  4. 使用cdn
+  5. 开启gzip
+  6. 减少cookie大小（目的也是为了减少http请求的大小，避免分包发送）
+  7. 图片延迟加载（减少请求数目，避免阻塞，目前大多数站点均有采用）
+  8. 使用cookie无关的域名来传输静态内容（减少Header的大小）
+  9. application cache等缓存静态资源
+
+如果文件都加载下来了，下面会影响性能的就是css和javascript这两块了。主要是很多最佳实践的东西，这里就不写了。
+
+
+关于浏览器在网络处理这一块的资料
+
+
+关于UC浏览器在网络请求并发数的一些问题，向内核组的同学咨询之后，大概总结如下
+
+一个Host下面的并发数是20个，host越多，并发数越大
+
+并发总数 = Host数目 * 20
+
+然而真实的并发数与具体环境的网络并发数也是相关的，android和ios，或者塞班，可能都会有所差别。
+
+ 
+一个http请求在大多数网络，一个包最多可承载的数据长度是1388字节，如果超出会被分成多个包；如果可以把每个请求限制在1388个字节之内，那么就减少请求的开销。
+
+不过这个1388的数值，在其他国家或地区可能会有差别。这个暂时无具体数据可以提供。
+
+
+
+
+参考：
+
+
+[1] https://developers.google.com/speed/docs/best-practices/request?hl=zh-CN&csw=1
+
+[2] http://www.zhihu.com/question/21057713
+[3] http://mobile.smashingmagazine.com/2013/04/03/build-fast-loading-mobile-website/ （推荐）
+[4] http://mobile.smashingmagazine.com/2013/08/12/creating-high-performance-mobile-websites/
+[5] https://github.com/cssmagic/blog/issues/20
+[6] http://51degrees.mobi/ressinfographic 
+[7] http://www.infoq.com/cn/articles/front-end-engineering-and-performance-optimization-part1
+[8] http://www.infoq.com/cn/articles/front-end-engineering-and-performance-optimization-part2
+[9] http://velocity.oreilly.com.cn/2013/index.php?func=session&id=14 (里面的PPt不错)
+[10] http://www.cnblogs.com/developersupport/p/3248695.html (推荐)  
+ */
+</script>
+</html>
