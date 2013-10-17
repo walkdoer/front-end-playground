@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>隐式类型转换</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+//隐式类型转换
+
+var str = “12345678”,
+    arr = [];
+for (var i = 0; i <= s.length; i++) {
+    arr.push(str.charAt(i));
+}
+
+/*
+
+这里我们在每个循环时都会调用字符串的“charAt”方法，但是由于我们是将常量“12345678”赋值给“str”，所以“str”这里事实上并不是一个字符串对象，当它每次调用“charAt”函数时，都会临时构造值为“12345678”的字符串对象，然后调用“charAt”方法，最后再释放这个字符串临时对象。我们可以做一些改进：*/
+
+//避免隐式类型转换
+var str = new Stirng(“12345678”),
+    arr = [];
+for (var i = 0; i <= s.length; i++) {
+    arr.push(str.charAt(i));
+}
+//变量“str”作为一个字符串对象，就不会有这种隐式类型转换的过程了，效率会显著提高。
+</script>
+</html>
