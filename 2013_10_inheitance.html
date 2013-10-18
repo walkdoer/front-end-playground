@@ -20,7 +20,8 @@ Person.prototype.getName = function () {
 };
 /**
  * 定义一个构造函数时，其默认的prototype对象是一个Object类型的实例，其constructor自动设置为该构造函数本身
- * 如果手工设置另外一个对象，那么新对象自然不会具有原对象constructor的值. 
+ * 如果手动将prototype设置另外一个对象，那么新对象自然不会具有原对象constructor的值.
+ * 所以这个时候一般会重新给constructor赋值
  *
  *   Class.prototype.constructor  = Class
  *
@@ -49,8 +50,8 @@ console.debug(Book.prototype.constructor === Object);  // true
 /**
  *
  * 每一个对象都有原型属性，但是只有函数有prototype属性
- * 创建对象的时候，javascript自动将其原型对象设置其构造函数的prototype属性所指的对象，而构造函数本身也是一个对象，它有自己的
- * 原型对象，但是这个原型对象并不是prototype指向的那个对象，因为函数也是对象，其构造函数是Function
+ * 创建对象的时候，javascript自动将其原型对象设置其构造函数的prototype属性所指的对象，而构造函数本身也是一个对象，
+ * 它同样也有自己的原型对象，但是这个原型对象并不是prototype指向的那个对象，因为函数也是对象，其构造函数是Function
  * 所以构造函数的原型对象实际就是Function.prototype指向的那个对象。
  *
  * 创建Author对象的时候，Author的原型对象就是构造函数的prototype属性(Author.protoype),也就是Person对象。
@@ -100,7 +101,7 @@ console.dir(author);
  * };
  *
  * 
- * 有了superClass属性之后，就可以简单地写
+ * 因为有了superClass属性之后，就可以简单地改写成下面的代码，而不依赖具体的某个类Mammal
  * Mammal = function Mammal(name) {
  *     Mammal.superClass.constructor.call(this, name, 'mammal');
  * };
