@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>观察者模式</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+/*
+观察者模式是对应用系统进行抽象的有力手段，提高代码的可维护和简洁性
+
+浏览器原生的addEventListener就是一种观察者模式
+ */
+
+
+function Publisher(argument) {
+    this.subcribers = [];
+}
+//推送
+Publisher.prototype.deliver = function (data) {
+    this.subcribers.forEach(function (fn) {
+        fn(data);
+    });
+    return this;
+}
+//订阅
+Function.prototype.subcribe = function (publisher) {
+    var that = this,
+        alreadyExist = publisher.subcribers.some(function (el) {
+            if (that === el) {
+                return true;
+            }
+        });
+    if (!alreadyExist) {
+        publisher.subcribers.push(this);
+    }
+    return this;
+}
+//取消订阅
+Function.prototype.unsubcribe = function (publisher) {
+    var that = this;
+
+    publisher.subcribers = publisher.subcribers.filter(function el() {
+        return el !== that;
+    });
+
+    return this;
+}
+//观察者主动向发布者拉取
+Function.prototype.pull = function (publisher) {
+    if (publisher.data) {
+        this(publisher.data);
+    }
+}
+
+var newspaper = new Publisher();
+
+var reader1 = function (data) {
+    console.log('reader1 read' + data);
+}, reader2 = function (data) {
+    console.log('reader2 read' + data);
+};
+
+reader1.subcribe(newspaper);
+reader2.subcribe(newspaper);
+
+newspaper.deliver('morning news')
+
+newspaper.data = 'night news';
+
+reader2.pull(newspaper);
+</script>
+</html>
