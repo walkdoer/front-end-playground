@@ -9,7 +9,81 @@
 <body>
 </body>
 <script type="text/javascript">
+/*
+
+ 
+责职链模式： 消除请求的发送者和接收者之间的耦合，链中的每一个对象都可以处理请求，或者将请求转给下一个对象。
+
+这个模式中有两个角色：
 
 
+   * 发送者：发出请求的对象
+   * 接收者：接收请求并处理请求或者传递请求的对象
+
+
+每一个接收者都知道唯一一个下家(successor),它知道什么时候处理请求，什么时候该传递请求，这也是责职链的核心
+
+ javascript内部就使用了这种模式来处理事件捕获和冒泡问题
+
+ */
+
+//code reference: https://gist.github.com/fundon/1174982
+var NO_TOPIC = -1;
+var Topic;
+
+function Handler(successor, topic) {
+    this.successor = successor || null;
+    this.topic = topic || 0;
+}
+
+Handler.prototype = {
+    handle: function () {
+        if (this.successor) {
+            this.successor.handle()
+        }
+    },
+    has: function () {
+        return this.topic != NO_TOPIC;
+    }
+};
+var app = new Handler({
+    handle: function () {
+        console.log('app handle');
+    }
+}, 3);
+//dialog的上家是app
+var dialog = new Handler(app, 1);
+dialog.handle = function () {
+    console.log('dialog before ...')
+    // 这里做具体的处理操作
+    // ....
+    //继续往上走
+    Handler.prototype.handle.call(this);
+    console.log('dialog after ...')
+};
+//button的上家是dialog
+var button = new Handler(dialog, 2);
+button.handle = function () {
+    console.log('button before ...')
+    // 这里做具体的处理操作
+    // ....
+    //继续往上走
+    Handler.prototype.handle.call(this);
+    console.log('button after ...')
+};
+
+button.handle();
+
+/*
+
+输出结果
+
+button before
+dialog before
+app handle
+dialog after
+button after
+
+*/
 </script>
 </html>
