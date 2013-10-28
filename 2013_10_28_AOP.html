@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>this is title</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+Function.prototype.before = function before(func) {
+    var __self = this;
+    return function () {
+        if (func.apply(this, arguments) === false) {
+            return false;
+        }
+        return __self.apply(this, arguments);
+    };
+};
+
+Function.prototype.after = function after(func) {
+    var __self = this;
+    return function () {
+        var ret = __self.apply(this, arguments);
+        if (ret === false) {
+            return false;
+        }
+        func.apply(this, arguments);
+        return ret;
+    };
+};
+
+function doSomething() {
+    console.log('do Something');
+    return 1;
+}
+
+var doSomeThingWithCleaner = doSomething.after(function () {
+    console.log('somebody clean what i do');
+    return 2;
+});
+
+console.log(doSomeThingWithCleaner());
+</script>
+</html>

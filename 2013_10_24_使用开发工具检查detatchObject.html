@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>this is title</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+  <div id=" leakedDiv "></div>
+  <p id="add"> 添加Div </p>
+  <p id="remove">删除div</p>
+<script type="text/javascript">
+//This page demonstrates how leaking of DOM nodes can be uncovered using the Heap Profiler.
+//
+//使用chrome开发者工具的profile进行heap profile分析，可以看出明显的内存泄露
+//
+//1. 进入profiles，然后take a snapshot
+//2. 选择containment，查看Detached Dom tree，可以看到上面有25个标红的HTMLDivElement
+/*function start() {
+    var p = document.getElementById("p");
+    detached = document.createElement("div"); //由于没有申明变量，detached变为全局变量
+    p.appendChild(detached);
+    p.removeChild(detached);
+    fill();
+}
+
+function fill() {
+    for (var i = 0; i < 5; ++i) {
+        var div = document.createElement('div');
+        div.data = new Array(10000);
+        for (var j = 0, l = div.data.length; j < l; ++j)
+            div.data[j] = j.toString();
+        detached.appendChild(div);
+    }
+}*/
+
+(function() {
+
+    function bind(element, type) {
+        element.addEventListener(type, function () {
+            element.innerHTML = 'ggg' + Math.random() * 10000;
+        });
+    }
+
+    bind(document.getElementById('leakedDiv'), 'click');
+
+    // var body = document.getElementByTag("body"),
+    //     addBtn = document.getElementById('add'),
+    //     removeBtn = document.getElementById('remove');
+
+    // function bindToRemove = function (element) {
+    //     element.innerHTML = '点击我删除我自己';
+    //     element.onclick = function () {
+    //         body.removeChild(element);
+    //     }
+    // }
+    // addBtn.onclick = function () {
+    //     var div = document.createElement('div');
+    //     bindToRemove(div);
+    //     body.appendChild(div);
+    // }
+    
+})();
+</script>
+</body>
+</html>
