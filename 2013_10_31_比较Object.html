@@ -1,0 +1,80 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>this is title</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+/*第一个版本*/
+var toString = Object.prototype.toString,
+    type,
+    equal;
+type = function (obj) {
+    var type;
+    if (obj == null) {
+        type = String(obj);
+    } else {
+        type = toString.call(obj).toLowerCase();
+        type = type.substring(8, type.length - 1);
+    }
+    return type;
+};
+equal = function (objA, objB, except) {
+    var attrCountA = Object.keys(objA).length,
+        attrCountB = Object.keys(objB).length,
+        tmp;
+    if (attrCountA < attrCountB) {
+        tmp = objA;
+        objA = objB;
+        objB = tmp;
+    }
+    for (var keyA in objA) {
+        if (except && except.indexOf(keyA) >= 0) {
+            continue;
+        }
+        if (objA.hasOwnProperty(keyA) && objB.hasOwnProperty(keyA)) {
+            var valA = objA[keyA],
+                valB = objB[keyA];
+            if (type(valA) === type(valB)) {
+                if (type(valA) === 'object') {
+                    if(!equal(valA, valB)) {
+                        return fasle;
+                    };
+                } else if (type(valA) === 'array') {
+                    for (var i = 0; i < valA.length; i++) {
+                        if(!equal(valA[i], valB[i])) {
+                            return false;
+                        }
+                    }
+                } else if (valA !== valB) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    return true;
+};
+console.log(equal({
+    person: [{
+        name: 'andrew',
+        age: 14
+    }],
+    title: 'teacher'
+}, {
+    person: [{
+        name: 'andrew',
+        age: 14
+    }],
+    title: 'teacher'
+}));
+</script>
+</html>
