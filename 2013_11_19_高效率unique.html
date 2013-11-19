@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>高效率的Unique</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+/*
+  这个函数是高效的，却会有类型问题
+   unique([1, 2, 3, 4, 5, 5])  返回值 ["1", "2", "3", "4", "5"]
+   unique([1, 2, 3, 4, 5,'5']) 返回值 ["1", "2", "3", "4", "5"]
+  但是 5 和 '5' 是不同的,前者是Number,后者是String
+ */
+function unique(arr) {
+    var r = {};
+    arr.forEach(function (e) {
+        r[e] = 1;
+    });
+    return Object.keys(r);
+}
+</script>
+</html>
