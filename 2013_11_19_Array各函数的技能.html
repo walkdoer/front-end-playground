@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Array Reduce</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+/*
+对于数组的一些函数使用较少，今天就学习一下这几个函数
+ */
+
+// --------------------------  reduce ----------------------------
+// array.reduce(callback[, initialValue])
+// ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+var testArr1 = [0, 1, 2, 3, 4];
+
+
+testArr1.reduce(function (previousValue, currentValue, index, array) {
+    console.log(previousValue, currentValue, index, array);
+    return previousValue + currentValue;
+}); // 运行结果: 10
+
+//如果有initialValue, 则 previousValue 就是 initialValue, currentValue则是数组的第一个元素
+testArr1.reduce(function (previousValue, currentValue, index, array) {
+    console.log(previousValue, currentValue, index, array);
+    return previousValue + currentValue;
+}, 10); // 运行结果 20 , 
+
+
+/* 
+  那这个函数究竟有什么用呢？
+
+    1. 数组求和
+    2. 扁平化数组
+
+        var flattened = [[0, 1], [2, 3], [4, 5]].reduce(function(a, b) {
+            return a.concat(b);
+        });
+        // flattened is [0, 1, 2, 3, 4, 5]
+*/
+
+
+
+</script>
+</html>
