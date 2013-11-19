@@ -17,11 +17,25 @@
   但是 5 和 '5' 是不同的,前者是Number,后者是String
  */
 function unique(arr) {
-    var r = {};
-    arr.forEach(function (e) {
-        r[e] = 1;
+    var result = {};
+    arr.forEach(function (element) {
+        result[element] = 1;
     });
-    return Object.keys(r);
+    return Object.keys(result);
+}
+/*
+  这个函数没有类型问题，不过得到的数组顺序是不对的。
+
+  unique_([1,2,3,'3']) 返回值 [1, 2, 3, "3"]
+  unique_([1,2,3,4,2])  返回值： [1, 3, 4, 2]
+
+ */
+function unique_(arr) {
+    var result = [];
+    arr.forEach(function (element, index) {
+        arr.indexOf(element, index + 1) > -1 || result.push(element);
+    })
+    return result;
 }
 </script>
 </html>
