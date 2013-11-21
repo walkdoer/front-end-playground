@@ -9,13 +9,47 @@
 <body>
 </body>
 <script type="text/javascript">
+/**
+ * 直觉得到的第一个版本 ref:https://github.com/lifesinger/lifesinger.github.com/issues/113
+ */
+function uniqueV1(arr) {
+  var ret = []
+  for (var i = 0; i < arr.length; i++) {
+    var item = arr[i]
+    if (ret.indexOf(item) === -1) {
+      ret.push(item)
+    }
+  }
+  return ret
+}
+
+/**
+ * 优化版 ref:https://github.com/lifesinger/lifesinger.github.com/issues/113
+ *
+ * 但是下面这个函数无法认出 uniqueV2([ new String(1), new Number(1) ])
+ */
+function uniqueV2(arr) {
+  var ret = []
+  var hash = {}
+
+  for (var i = 0; i < arr.length; i++) {
+    var item = arr[i]
+    var key = typeof(item) + item
+    if (hash[key] !== 1) {
+      ret.push(item)
+      hash[key] = 1
+    }
+  }
+
+  return ret
+}
 /*
   这个函数是高效的，却会有类型问题
-   unique([1, 2, 3, 4, 5, 5])  返回值 ["1", "2", "3", "4", "5"]
-   unique([1, 2, 3, 4, 5,'5']) 返回值 ["1", "2", "3", "4", "5"]
+   uniqueV3([1, 2, 3, 4, 5, 5])  返回值 ["1", "2", "3", "4", "5"]
+   uniqueV3([1, 2, 3, 4, 5,'5']) 返回值 ["1", "2", "3", "4", "5"]
   但是 5 和 '5' 是不同的,前者是Number,后者是String
  */
-function unique(arr) {
+function uniqueV3(arr) {
     var result = {};
     arr.forEach(function (element) {
         result[element] = 1;
@@ -25,11 +59,11 @@ function unique(arr) {
 /*
   这个函数没有类型问题，不过得到的数组顺序是不对的。
 
-  unique_([1,2,3,'3']) 返回值 [1, 2, 3, "3"]
-  unique_([1,2,3,4,2])  返回值： [1, 3, 4, 2]
+  uniqueV4([1,2,3,'3']) 返回值 [1, 2, 3, "3"]
+  uniqueV4([1,2,3,4,2])  返回值： [1, 3, 4, 2]
 
  */
-function unique_(arr) {
+function uniqueV4(arr) {
     var result = [];
     arr.forEach(function (element, index) {
         arr.indexOf(element, index + 1) > -1 || result.push(element);
