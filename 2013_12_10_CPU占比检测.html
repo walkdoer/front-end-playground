@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>CPU占比检测</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+var data = []
+var t
+
+function pulse() {
+  t && data.push(Date.now() - t);
+  t = Date.now()
+  setTimeout(pulse, 50)
+}
+
+pulse();
+
+//理想数据: [50, 50, 50, 50, ...]
+//真实数据: [50, 51, 54, 53, ...]
+//CPU繁忙: [89, 104, 68, 85, ...]
+
+</script>
+</html>
