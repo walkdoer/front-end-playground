@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>bind导致内存泄露</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+
+
+var ClassA = function(name){
+    this.name = name;
+    this.func = null;
+};
+var a = new ClassA("a");
+var b = new ClassA("b");
+
+b.func = bind(function(){
+      console.log("I am " + this.name);
+}, a);
+
+b.func();  //输出 I am a
+a = null;        //释放a
+b.func = null;
+
+//模拟上下文绑定
+function bind(func, self){
+      return function(){
+              return func.apply(self);
+      };
+};
+
+/*
+ 在开发者工具中使用profile工具查看，可以看到ClassA有两个对象
+
+ ClassA
+    ClassA @18767
+    ClassA @44513
+
+刚刚不是已经 a = null 了吗？按道理ClassA对象应该只剩下一个。
+
+多出来的那个ClassA对象是bind里的闭包的上下文self，self与a引用同一个对象。虽然a释放了，但由于b没有释放，或者b.func没有释放，使得闭包里的self也一直存在。要释放self，可以执行b=null或者b.func=null。
+
+ */
+</script>
+</html>
