@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>一段信息量很大的javascript代码，来自kissy</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+(function(host, S) {  
+  
+    var meta = {  
+        mix: function(r, s, ov, wl) {  
+             ...  
+        }  
+    },  
+  
+    // If KISSY is already defined, the existing KISSY object will not  
+    // be overwritten so that defined namespaces are preserved.  
+    seed = (host && host[S]) || {},  
+  
+    // The host of runtime environment. specify by user's seed or <this>,  
+    // compatibled for  '<this> is null' in unknown engine.  
+    host = seed.__HOST || (seed.__HOST = host || {});  
+  
+    // shortcut and meta for seed.  
+    S = host[S] = meta.mix(seed, meta, false);  
+  
+    return S;  
+  
+})(this, 'KISSY');  
+
+//参考 http://blog.csdn.net/aimingoo/article/details/6062997
+</script>
+</html>
