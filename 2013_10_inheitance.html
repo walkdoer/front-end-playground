@@ -62,7 +62,7 @@ var Author = function (name, book) {
     Person.call(this, name);
     this.book = book;
 }
-Author.prototype = new Person();
+
 /** 
  * 改变了原型，会覆盖了源对象Constructor的值，所以要重新指向构造函数Author
  * 
@@ -70,10 +70,18 @@ Author.prototype = new Person();
  * console.debug(author.constructor === Author);
  *
  * 但是如果不重新指向构造函数，那么就是使用prototype指向的对象的构造函数，例如:
- * 注释掉 （Author.prototype.constructor = Author;） 这一句代码，重新运行
+ * 注释掉 
+ *     Author.prototype.constructor = Author;
+ * 
+ * 这一句代码，重新运行
+ * 
  * 然后创建一个Author的实例 author
- * author.constructor 就是其prototype指向的对象的构造函数，也就是Person
+ * 
+ * 这个时候发现 author.constructor 是Person, 为什么呢？
+ * 因为改变了原型，会覆盖了源对象constructor值,author.construtor读取的其实是其原型（Author.prototype = new Person();）的构造函数，也就是Person构造函数
  */
+
+Author.prototype = new Person();
 Author.prototype.constructor = Author;
 Author.prototype.getBook = function () {
     return this.book;
