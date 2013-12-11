@@ -10,6 +10,7 @@
 <body>
 </body>
 <script type="text/javascript">
+
 var Person = Class.extend({
   init: function(isDancing){
     this.dancing = isDancing;
@@ -43,7 +44,6 @@ n.swingSword(); // => true
 //p instanceof Person && p instanceof Class &&
 //n instanceof Ninja && n instanceof Person && n instanceof Class
 
-
 function Animal(type) {
     this.type = type;
 }
@@ -54,5 +54,12 @@ function Man(name) {
 Man.prototype = new Animal('human');
 Man.prototype.constructor = Man;
 
+/*
+
+Rreference:
+
+[1] http://ejohn.org/blog/simple-javascript-inheritance/
+
+ */
 </script>
 </html>

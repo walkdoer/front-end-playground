@@ -29,6 +29,11 @@
                 typeof _super[name] == "function" && fnTest.test(prop[name]) ?
                 (function(name, fn) {
                 return function() {
+                    // To start we need to be a good citizen and save a reference to the 
+                    // old this._super (disregarding if it actually exists) 
+                    // and restore it after we’re done.
+                    //  This will help for the case where a variable with the same name already exists 
+                    //  (don’t want to accidentally blow it away).
                     var tmp = this._super;
 
                     // Add a new ._super() method that is the same method
