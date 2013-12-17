@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>this and bind</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+</body>
+<script type="text/javascript">
+
+
+var objA = {
+    test: function retaining () {
+        var self = this;
+        return function () {
+            /**
+             * 执行到这里的时候 Scope如下：
+             *   Local
+             *      this: Window
+             *   Closure
+             *      self: Object(objA)
+             */
+            console.log(self);
+        };
+    }
+};
+
+
+var objB = {
+    test: function retaining () {
+        return function () {
+            /**
+             * 执行到这里的时候 Scope如下：
+             *   Local
+             *      this: Window
+             * 对比上面的例子，可以发现使用bind函数时，执行环境少了一层闭包，所以这样子的写法对性能是有一定的提升的。
+             */
+            console.log(this);
+        }.bind(this);
+    }
+};
+
+objA.test()();
+
+objB.test()();
+</script>
+</html>
