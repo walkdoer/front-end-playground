@@ -1,53 +1,61 @@
 'use strict';
 var messages = {},
+    lastId = -1,
     slice = Array.prototype.slice;
-
-
 function hasMessage(msg) {
     return messages.hasOwnProperty(msg);
 }
 var PubSub = function () {
-    
+	//todo
 };
 PubSub.subscribe = function (msg, fn) {
-    var msgQueue;
     if (typeof fn !== 'function') {
         return false;
     }
+    var token = ++lastId;
 
     if (!hasMessage(msg)) {
         messages[msg] = [];
     }
 
-    messages[msg].push(fn);
+    messages[msg].push({
+        token: token,
+        fn: fn
+    });
 };
 
 PubSub.publish = function (msg) {
     if (!hasMessage(msg)) {
         return false;
     }
-    var msgQueue = messages[msg],
+    var subscribers = messages[msg],
         args = slice.call(arguments, 0);
-    for (var i = 0, len = msgQueue.length, fn; i < len; i++) {
-        fn = msgQueue[i];
+    for (var i = 0, len = subscribers.length, fn; i < len; i++) {
+        fn = subscribers[i].fn;
         if (typeof fn === 'function') {
             fn.apply(null, args);
         }
     }
 };
 
-PubSub.unsubscribe = function (msg, fn) {
-
-    if (!hasMessage(msg)) {
+PubSub.unsubscribe = function (tokenOrMsg, fn) {
+    var token, msg;
+    if (typeof tokenOrMsg === 'number') {
+        token = tokenOrMsg;
+    } else if (typeof tokenOrMsg === 'string') {
+        msg = tokenOrMsg;
+    } else {
         return false;
     }
-
-    var msgQueue = messages[msg];
+    if (msg && !hasMessage(msg)) {
+        return false;
+    }
+    var subscribers = messages[msg];
     if (typeof fn === 'function') {
-        for (var i = 0, len = msgQueue.length, fnItm; i < len; i++) {
-            fnItm = msgQueue[i];
-            if (fnItm === fn) {
-                msgQueue.splice(i, 1);
+        for (var i = 0, len = subscribers.length, subscriber; i < len; i++) {
+            subscriber = subscribers[i];
+            if (subscriber.fn === fn) {
+                subscribers.splice(i, 1);
             }
         }
     } else {
