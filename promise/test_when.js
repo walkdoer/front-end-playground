@@ -45,14 +45,14 @@ var imageArray = [
     'http://www.baidu.com/favicon.ico',
     'http://www.google.com/favicon.ico'
 ];
-
-loadImages(imageArray).then(function (dataArray) {
-    console.log('load ' + dataArray.length + ' image success');
-}, function () {
+function loadImageError() {
     console.error('load images fail');
-}).then(function () {
-    console.log('is there two Images');
-});
+}
+function loadImageSuccess(dataArray) {
+    console.log('load ' + dataArray.length + ' image success');
+}
+
+loadImages(imageArray).then(loadImageSuccess, loadImageError);
 
 /**
  * 模拟异步请求数据
@@ -73,9 +73,17 @@ function asyncGetNumberArray(len) {
     }
     return deferreds;
 }
-
+//when.map的第一种用法：传入Promise数组
 when.map(asyncGetNumberArray(5), function(number) {
     console.log(number);
 });
+//when.map的第二种用法：传入Value数组
+when.map(imageArray, request).then(loadImageSuccess, loadImageError);
 
+when.reduce(asyncGetNumberArray(5), function (currentResult, value, index, total){
+    console.log(currentResult, value, index, total);
+    return currentResult + value;
+}).then(function (total) {
+    console.log('total:' + total);
+});
 
