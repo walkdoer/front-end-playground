@@ -77,9 +77,11 @@ function asyncGetNumberArray(len) {
 when.map(asyncGetNumberArray(5), function(number) {
     console.log(number);
 });
+
 //when.map的第二种用法：传入Value数组
 when.map(imageArray, request).then(loadImageSuccess, loadImageError);
 
+//叠加异步请求的数组 [5, 6, 7, 8, 9]
 when.reduce(asyncGetNumberArray(5), function (currentResult, value, index, total){
     console.log(currentResult, value, index, total);
     return currentResult + value;
