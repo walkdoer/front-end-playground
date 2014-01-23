@@ -81,7 +81,7 @@ getTestIpList().then(function (ipList) {
         return bestIP;
     });
 }).then(function (bestIp) {
-    console.log('bestIp:', bestIp);
+    console.log('bestIp is', bestIp);
 });
 
 
