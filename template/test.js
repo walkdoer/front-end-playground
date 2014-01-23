@@ -1,13 +1,14 @@
+require('colors');
 var template = require('./template');
 
-var tpl = '<span><%=data.name%></span>\n<span><%=("hello " + data.name)%></span>';
+var tpl = '<span><%=name%></span>\n<span>like <%=like%></span>';
+var data = {name: 'andrew', like: 'iris'};
+var result = template.tmpl(tpl, data);
 
-var result = template.tmpl(tpl, {name: 'andrew'});
-
-console.log('result:\n' + result);
+console.log('result:\n' + result.yellow);
 console.log('------------Test Result------------');
-if (result === '<span>andrew</span>\n<span>hello andrew</span>') {
-    console.log('test pass');
+if (result === '<span>andrew</span>\n<span>like iris</span>') {
+    console.log('test pass'.green);
 } else {
-    console.log('test failed');
+    console.log('test failed'.red);
 }

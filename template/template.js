@@ -101,7 +101,7 @@ function tmpl(str, data, helper) {
                 .replace(/"/g, '\\"')
                 //replace code <%=data.name%>
                 .replace(settings.interpolate, function(match, code) {
-                    return '"+' + code.replace(/\\"/g, '"') + '+"';
+                    return '"+data.' + code.replace(/\\"/g, '"') + '+"';
                 })
                 .replace(settings.evaluate || null, function(match, code) {
                     return '";' + code.replace(/\\"/g, '"')
