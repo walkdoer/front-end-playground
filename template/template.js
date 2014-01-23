@@ -73,7 +73,7 @@ template.str2html = function (str) {
 template.tplSettings = {
     cache: {},
     evaluate: /<%([\s\S]+?)%>/g,
-    interpolate: /<%=([\s\S]+?)%>/g
+    interpolate: /<%([\s\S]+?)%>/g
 };
 
 tplMethods = {
@@ -101,14 +101,19 @@ function tmpl(str, data, helper) {
                 .replace(/"/g, '\\"')
                 //replace code <%=data.name%>
                 .replace(settings.interpolate, function(match, code) {
+                    var objKeyArray = code.split('.'),
+                        objItem = data;
+                    _.each(objKeyArray, function (value, index) {
+                        objItem = objItem[value];
+                    });
                     var execute = code.replace(/\\"/g, '"') +
-                       (typeof data[code] === 'function' ? '()' : '');
+                       (typeof objItem === 'function' ? '()' : '');
                     return '"+data.' + execute + '+"';
                 })
-                .replace(settings.evaluate || null, function(match, code) {
-                    return '";' + code.replace(/\\"/g, '"')
-                        .replace(/[\r\n\t]/g, ' ') + '__tpl+="';
-                })
+                // .replace(settings.evaluate || null, function(match, code) {
+                //     return '";' + code.replace(/\\"/g, '"')
+                        // .replace(/[\r\n\t]/g, ' ') + '__tpl+="';
+                // })
                 .replace(/\r/g, '\\r')
                 .replace(/\n/g, '\\n')
                 .replace(/\t/g, '\\t') +
