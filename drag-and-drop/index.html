@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>this is title</title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+</head>
+<style type="text/css">
+
+.drop-area {
+    background: #ccc;
+    height: 100px;
+}
+.drop-area span{
+    display: inline-block;
+    background: #EEE;
+    margin: 4px;
+    padding: 3px;
+    border-radius: 4px;
+}
+</style>
+<body>
+</body>
+<div id="drag-el" draggable="true">
+  This text <strong>may</strong> be dragged , !!.
+</div>
+<a draggable="false" href="test">home</a>
+<div class="drop-area"></div>
+<script type="text/javascript">
+var dragObj = $('#drag-el')[0],
+    num = 0;
+dragObj.ondragstart = function (event) {
+  var dt = event.dataTransfer;
+  dt.setData('text/plain', 'Data to Drag');
+  console.log('ondragstart dropEffect:' + dt.dropEffect);
+};
+
+dragObj.ondrag = function (event) {
+  var dt = event.dataTransfer;
+  //console.log('ondrag dropEffect:' + dt.dropEffect);
+};
+
+dragObj.ondragend = function (ev) {
+    //判斷drag是否成功
+    if (ev.dataTransfer.dropEffect !== 'none') {
+        num++;
+    }
+    $(ev.target).html('I have ' + num +' copy now!');
+    console.log('ondragend dropEffect:' + ev.dataTransfer.dropEffect);
+}
+var dropArea = $('.drop-area')[0];
+
+dropArea.ondragover = function (ev) {
+    console.log('ondragover dropEffect:' + ev.dataTransfer.dropEffect);
+    console.log(ev.target);
+    if (ev.target.className === 'drop-area') {
+        return false;
+    }
+};
+
+dropArea.ondrop = function (ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text/plain");
+    $(ev.target).css('background', '#ccc');
+    ev.target.appendChild($('<span>' + data + '</span>')[0]);
+    console.log('ondrop dropEffect:' + ev.dataTransfer.dropEffect);
+}
+
+dropArea.ondragenter = function (ev) {
+    $(ev.target).css('background', '#ff0');
+    console.log('ondragenter dropEffect:' + ev.dataTransfer.dropEffect);
+}
+
+dropArea.ondragleave = function (ev) {
+    $(ev.target).css('background', '#ccc');
+    console.log('ondragleave dropEffect:' + ev.dataTransfer.dropEffect);
+}
+
+</script>
+</html>
