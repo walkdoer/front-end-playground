@@ -1,0 +1,59 @@
+/*
+使用如下规则来进行模块的划分
+
+## Utility
+.u-utilityName {}
+
+## Component
+.ComponentName {}
+
+## Component modifier
+.ComponentName--modifierName {}
+
+## Component descendant
+.ComponentName-descendant {}
+
+## Component descendant modifier
+
+.ComponentName-descendant--modifierName {}
+
+## Component state (scoped to component)
+
+.ComponentName.is-stateOfComponent {}
+
+*/
+
+
+/* Reset */
+
+
+/* Global*/
+
+
+/* Utility */
+.u-clearfix{}
+
+/* Components */
+
+
+
+
+
+
+
+
+.az-btnGroup{}
+    .az-btnGroup-btn{}
+
+
+.az-dateRangeSelector{}
+
+.az-numberRangeSelector{}
+
+.az-table{}
+    .az-table-row{}
+    .az-table-cell{}
+    .az-table-cell-btns{}
+
+
+

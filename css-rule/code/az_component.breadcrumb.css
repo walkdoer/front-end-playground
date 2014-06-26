@@ -1,0 +1,6 @@
+.az-breadcrumd{}
+    .az-breadcrumd-item{} /*item为breadcrumb的child，所以这里需要缩进来表示从属关系*/
+    .az-breadcrumd.is-actived{}
+    .az-breadcrumd.is-disabled{}
+    .az-breadcrumd.is-visitable{}
+

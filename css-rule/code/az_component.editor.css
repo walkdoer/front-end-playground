@@ -1,0 +1,19 @@
+.az-viewEditor{}
+    .az-viewEditor-com {}
+
+    .az-viewEditor-sidebar{}
+        .az-viewEditor-sidebar-com{}
+
+    .az-viewEditor-toolbar{}
+        .az-viewEditor-toolbar-btn{}
+        .az-viewEditor-toolbar-btn.is-disabled{}
+
+    .az-viewEditor-workspace{}
+        .az-viewEditor-workspace-row{}
+            .az-viewEditor-workspace-row-header{}
+            .az-viewEditor-workspace-row-content{}
+                .az-viewEditor-workspace-row-com{}
+
+    .az-viewEditor-toolbar-list{}
+
+
