@@ -38,7 +38,9 @@ az_component.breadcrumb.css
 az_component.menu.css
 az_component.table.css
 ```
+
 当然，还有另外一种方案就是采用目录结构来进行切分的
+
 ```bash
 ├── layout //布局
 │   ├── content.css
@@ -67,6 +69,14 @@ az_component.table.css
 /* Component */
 .ComponentName {}
 
+/* category 用于对组件进行分类*/
+
+/* 表示布局*/
+._layout-ComponentName{}
+
+/* 表示通用模块
+._component-ComponentName{}
+
 /* Component modifier */
 .ComponentName__modifierName {}
 
@@ -83,3 +93,13 @@ az_component.table.css
 
 ```
 如果有需要,可以在规则的前面加上系统前缀，如本实验中，全部规则都会加上`az`前缀 如 `.az-u-clearfix {}`
+
+#### 关于Layout布局
+布局的命名格式格式  `projectPrefix_layout-LayoutName`,添加这个标识符是为了更好的将布局类和组件类区分开来, 如果没有"_layout"在类名中，很难区分az-header到底是一个布局还是一个组件
+```
+<div class="az_layout-header">
+  <nav class="az-nav"> <!-- ... --></nav>
+</div>
+```
+如果按照组件的思想，页面上一切皆为组件，那么布局也只是一个有其他组件构成的大组件而已，按照这个逻辑来讲，是不应该通过添加标识符来进行概念上的区分。那么，如“_layout”这个标识符的存在不是为了区分"组件"和"布局"这个两个实际上是一样的概念，而仅仅是为了阅读的方便。那就可以避免"组件"在概念上的不一致了。
+
