@@ -19,27 +19,27 @@ CSS模块化实验
 
 ```js
 //工具类
-wa.util.css
+az.util.css
 //重置
-wa.reset.css
+az.reset.css
 //整体布局文件
-wa_layout.godview.css
+az_layout.godview.css
 //头部布局
-wa_layout.header.css
+az_layout.header.css
 //侧边栏布局
-wa_layout.sidebar.css
+az_layout.sidebar.css
 //页面主区域布局
-wa_layout.content.css
-//wa_component 系统组件
-wa_component_report.css
-wa_component.layoutEditor.css
-wa_component.layoutEditor.sidebar.css
-wa_component.breadcrumb.css
-wa_component.menu.css
-wa_component.table.css
+az_layout.content.css
+//az_component 系统组件
+az_component_report.css
+az_component.layoutEditor.css
+az_component.layoutEditor.sidebar.css
+az_component.breadcrumb.css
+az_component.menu.css
+az_component.table.css
 ```
 当然，还有另外一种方案就是采用目录结构来进行切分的
-```js
+```bash
 ├── layout //布局
 │   ├── content.css
 │   ├── footer.css
@@ -52,7 +52,7 @@ wa_component.table.css
 ├── widget //组件
 ├── reset.css //重置
 ├── util.css //工具类
-└── wa.css //入口
+└── az.css //入口
 ```
 
 ### CSS规则命名规范
