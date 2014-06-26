@@ -1,0 +1,125 @@
+html,
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+input,
+textarea,
+p,
+blockquote,
+th,
+td,
+iframe,
+hr {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font: 12px/1.6 Tahoma, microsoft yahei, "微软雅黑", "宋体";
+    *font-family: "微软雅黑", "宋体";
+}
+body {
+    margin: 0;
+    line-height: 1.5;
+}
+fieldset,
+img {
+    border: 0;
+}
+address,
+caption,
+cite,
+dfn,
+em,
+th,
+var {
+    font-style: normal;
+    font-weight: normal;
+}
+ol,
+ul {
+    list-style: none;
+}
+caption,
+th {
+    text-align: left;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 100%;
+    font-weight: 500
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+select,
+input,
+label,
+button,
+textarea {
+    margin: 0;
+    padding: 0;
+    font: normal normal normal"微软雅黑", arial, Simsun, Arial Unicode MS, Mingliu, Arial;
+    overflow: visible;
+}
+input {
+    padding: 2px 0 1px;
+    *padding: 4px 0 0;
+    _padding: 4px 0 0;
+    _height: 21px;
+    font-family: "微软雅黑";
+}
+small {
+    font-size: 85%;
+}
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"] {
+    color: rgb(133, 133, 133);
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(213, 213, 213);
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    padding: 5px 3px;
+    line-height: 1.2;
+    font-size: 14px;
+    font-family: inherit;
+    transition-duration: 0.1s;
+    -webkit-transition-duration: 0.1s;
+    border-radius: 0px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
