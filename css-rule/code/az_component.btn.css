@@ -5,20 +5,4 @@
 .az-btn__red{}
 .az-btn__yellow{}
 
-/*
- * Example
- * <button class="az-btn az-btn__blue"></button>
- * 从例子可以看出，使用多个类名的组合来实现想要的样式，
- * 还有另外一种方式是使用继承
- *
- * .az-btn,
- * .az-btn__blue,
- * .az-btn__yellow{}
- *
- * .az-btn-blue{}
- * .az-btn-yellow{}
- * <button class="az-btn__blue"></button>
- *
- * 很明显，使用继承虽然可以减少class的数量，但是较难维护,还是组合的方式扩展性更好
- * 粒度更小，更容易得到复用
- */
+/
