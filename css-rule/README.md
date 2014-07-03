@@ -30,13 +30,13 @@ az_layout.header.css
 az_layout.sidebar.css
 //页面主区域布局
 az_layout.content.css
-//az_component 系统组件
-az_component_report.css
-az_component.layoutEditor.css
-az_component.layoutEditor.sidebar.css
-az_component.breadcrumb.css
-az_component.menu.css
-az_component.table.css
+//az_com 系统组件
+az_com_report.css
+az_com.layoutEditor.css
+az_com.layoutEditor.sidebar.css
+az_com.breadcrumb.css
+az_com.menu.css
+az_com.table.css
 ```
 
 当然，还有另外一种方案就是采用目录结构来进行切分的
@@ -69,13 +69,17 @@ az_component.table.css
 /* Component */
 .ComponentName {}
 
-/* category 用于对组件进行分类*/
+/* category 用于对组件进行分类
+ 目前类别
+ _com 组件，页面上的所有都是组件
+ _layout 布局
+ */
 
 /* 表示布局*/
 ._layout-ComponentName{}
 
-/* 表示通用模块
-._component-ComponentName{}
+/* 表示组件 */
+._com-ComponentName{}
 
 /* Component modifier */
 .ComponentName__modifierName {}
@@ -84,13 +88,17 @@ az_component.table.css
 .ComponentName-descendant {}
 
 /* Component descendant modifier */
-
 .ComponentName-descendant__modifierName {}
 
 /* Component state (scoped to component)*/
-
 .ComponentName.is-stateOfComponent {}
 
+/* 
+   js hook 用于提供给js文件使用的类名，这种是不会出现在css文件的
+   开发人员见到这个前缀，就知道这个类名不是用于样式，而是js hook，不能随便删除
+   而没有js前缀的，则可以随意重构，不会影响js文件
+ */
+.js-css-rule {}
 ```
 如果有需要,可以在规则的前面加上系统前缀，如本实验中，全部规则都会加上`az`前缀 如 `.az-u-clearfix {}`
 
