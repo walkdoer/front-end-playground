@@ -64,7 +64,21 @@ az_com.table.css
 ```css
 
 /* Utility */
-.u-utilityName {}
+._u-utilityName {}
+
+/*@example*/
+
+    .az_u-clearfix {}
+
+/* 通用的背景样式*/
+
+._bg-colorName {} 
+
+/*@example*/
+
+    .az_bg-red {}
+    .az_bg-redToBlue{}
+    .az_bg-rainbow{}
 
 /* Component */
 .ComponentName {}
@@ -78,20 +92,55 @@ az_com.table.css
 /* 表示布局*/
 ._layout-ComponentName{}
 
+/*@example*/
+
+    .az_layout-header {}
+    .az_layout-body {}
+    .az_layout-footer {}
+
+
 /* 表示组件 */
 ._com-ComponentName{}
+
+/*@example*/
+
+    .az_com-nav {}
+    .az_com-button {}
+    .az_com-menu {}
+    .az_com-selector {}
+    .az_com-slider {}
 
 /* Component modifier */
 .ComponentName__modifierName {}
 
+/*@example*/
+
+    .az_com-button__big {}
+    .az_com-button__withIcon {}
+
 /* Component descendant */
 .ComponentName-descendant {}
+
+/*@example*/
+    .az_com-menu {}
+    .az_com-menu-icon {}
+    .az_com-menu-text {}
 
 /* Component descendant modifier */
 .ComponentName-descendant__modifierName {}
 
+/*@example*/
+    .az_com-menu-icon__right;
+
 /* Component state (scoped to component)*/
 .ComponentName.is-stateOfComponent {}
+
+/*@example*/
+    .az.is-rendered{}
+    .az_com-menu.is-actived {}
+    .az_com-button.is-disabled {}
+    .az_com-window.is-mimimize {}
+
 
 /* 
    js hook 用于提供给js文件使用的类名，这种是不会出现在css文件的
@@ -99,8 +148,14 @@ az_com.table.css
    而没有js前缀的，则可以随意重构，不会影响js文件
  */
 .js-css-rule {}
+
+/*@example*/
+    .js-confirm {}  /*<button class="az_com-btn js-confirm">确定</button>*/
+    .js-cancel {}
+    .js-delete {}
+
 ```
-如果有需要,可以在规则的前面加上系统前缀，如本实验中，全部规则都会加上`az`前缀 如 `.az-u-clearfix {}`
+如果有需要,可以在规则的前面加上系统前缀，如本实验中，全部规则都会加上`az`前缀 如 `.az_u-clearfix {}`
 
 #### 关于Layout布局
 布局的命名格式格式  `projectPrefix_layout-LayoutName`,添加这个标识符是为了更好的将布局类和组件类区分开来, 如果没有"_layout"在类名中，很难区分az-header到底是一个布局还是一个组件
