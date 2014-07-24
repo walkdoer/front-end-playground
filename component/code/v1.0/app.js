@@ -24,7 +24,9 @@ define(function () {
     }
 
     function renderNewsDetail(newsId) {
-        detailPage.render(newsId);
+        model.getNews(newsId).then(function (news) {
+            detailPage.render(news);
+        });
     }
 
     router.start();
