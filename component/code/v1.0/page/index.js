@@ -4,12 +4,15 @@
 define(function () {
 
     'use strict';
-    var pageTpl = require('/path/to/pageTpl');
+    var model = require('model');
+    var pageTpl = require('/path/to/pageTpl'),
+        adTpl = require('tpl/advertisement.tpl');
     var index = {
 
         render: function (data) {
             var $el = _.template(pageTpl, data);
             $('#container').append($el);
+            this._renderAdvertisement();
             this._bindEvent();
         },
 
@@ -29,9 +32,13 @@ define(function () {
             });
         },
 
-        /* a lots of code in here */
-        _foo: function () {
-            this.$el.on('click', '.js-open-window', function () {});
+        _renderAdvertisement: function () {
+            var that = this;
+            var date = new Date();
+            model.getAdvertisement(date).then(function (ad) {
+                var adHTML = _.template(adTpl, ad);
+                that.$el.find('.advertisement').append(adHTML);
+            });
         }
 
     };
