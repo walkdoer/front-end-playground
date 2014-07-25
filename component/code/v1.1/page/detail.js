@@ -12,17 +12,17 @@ define(function() {
 
         uiEvents: {
 
-            '.js-close': function() {
-                //close article
+            'click .js-close': function() {
+                //close news
             },
 
 
-            '.js-next': function() {
+            'click .js-next': function() {
                 //view next news
             },
 
 
-            '.js-prev': function() {
+            'click .js-prev': function() {
                 //view prev news
             }
         },

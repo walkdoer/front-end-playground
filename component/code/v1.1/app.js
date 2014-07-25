@@ -4,7 +4,7 @@
 define(function () {
 
     'use strict';
-    var router = require('path/to/router'),
+    var router = require('path/to/router');
     var IndexPage = require('page/index'),
         NewsDetailPage = require('page/detail'),
         NewsPage = require('page/news');
@@ -31,6 +31,7 @@ define(function () {
                 pageCache[pageName] = page;
             }
             page.render();
+            $('#page-container').empty().append(page.$el);
         };
     }
 
