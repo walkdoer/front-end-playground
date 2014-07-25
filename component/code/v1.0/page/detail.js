@@ -10,11 +10,11 @@ define(function () {
         render: function (data) {
             var $el = _.template(pageTpl, data);
             $('#container').append($el);
-            this._bindEvent();
+            this.attachEvents();
         },
 
 
-        _bindEvent: function () {
+        attachEvents: function () {
             this.$el.on('click', {
 
                 '.js-close': function () {
