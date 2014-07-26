@@ -4,7 +4,9 @@
 define(function() {
 
     'use strict';
-    var Base = require('./base');
+    var Base = require('./base'),
+        Navigation = require('components/Navigation'),
+        ConfigWindow = require('components/Window.Config');
     var model = require('model');
     var pageTpl = require('/tpl/page/index'),
         adTpl = require('tpl/advertisement.tpl');
@@ -16,19 +18,30 @@ define(function() {
             var $el = _.template(pageTpl, data);
             $('#container').append($el);
             this._renderAdvertisement();
-            this._bindEvent();
         },
-
 
         uiEvents: {
 
             'click .js-config': function() {
-                //open config window
+                var cfgWin = this.cfgWin || new ConfigWindow().render();
+                if (!this.cfgWin) {
+                    this.$el.append(cfgWin);
+                    this.cfgWin = cfgWin;
+                } else {
+                    cfgWin.show();
+                }
             },
 
 
             'click .js-open-nav': function() {
-                //open navigation
+                //open navigation dropmenu
+                var nav = this.nav || new Navigation().render();
+                if (!this.nav) {
+                    this.$el.append(nav);
+                    this.nav = nav;
+                } else {
+                    nav.show();
+                }
             }
         },
 
