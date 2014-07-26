@@ -1,5 +1,5 @@
 /**
- * app
+ * components/list
  */
 define(function () {
     'use strict';

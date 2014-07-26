@@ -25,6 +25,7 @@ define(function() {
                     pageNum: this.pageNum++
                 }).then(function(newsArr) {
                     _.each(newsArr, function(newsData) {
+                        //create a news and then render it
                         var news = new News().render(newsData);
                         page.list.add(news);
                     });
