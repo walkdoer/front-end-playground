@@ -6,7 +6,7 @@ define(function() {
     'use strict';
     var Base = require('./base'),
         List = require('./list'),
-        News = require('components/news');
+        NewsBrief = require('components/NewsBrief');
     var router = require('router'),
         model = require('model');
     var pageTpl = require('tpl/newsPage.tpl');
@@ -26,7 +26,7 @@ define(function() {
                 }).then(function(newsArr) {
                     _.each(newsArr, function(newsData) {
                         //create a news and then render it
-                        var news = new News().render(newsData);
+                        var news = new NewsBrief().render(newsData);
                         page.list.add(news);
                     });
                 });
@@ -36,17 +36,18 @@ define(function() {
 
         render: function(data) {
             var page = this;
-            var newsArr = data.newsArr;
-            var $page = $(_.template(pageTpl, data));
-            this.list = new List();
-            var $listContainer = $page.find('.az_com-newsList');
-            _.each(newsArr, function(newsData) {
-                var news = new News().render(newsData);
-                page.list.add(news);
+            this.$el = $(_.template(pageTpl, data));
+            model.getNews({groupId: this.groupId, pageNum: 0}).then(function (data) {
+                var newsArr = data.newsArr;
+                page.list = new List();
+                var $listContainer = page.$el.find('.az_com-newsList');
+                _.each(newsArr, function(newsData) {
+                    var news = new NewsBrief().render(newsData);
+                    page.list.add(news);
+                });
+                $listContainer.append(page.list.$el);
+                return this;
             });
-            $listContainer.append(page.list.$el);
-            this.$el = $page;
-            return this;
         }
 
     });

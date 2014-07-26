@@ -1,5 +1,6 @@
 /**
  * 新闻实体
+ * components/NewsDetail
  *
  * @return
  */
@@ -8,7 +9,7 @@ define(function () {
 
     var Base = require('./base');
     var newsTpl = require('tpl/news');
-    var News = Base.extend({
+    var NewsDetail = Base.extend({
 
         render: function (news) {
             var $el = $(_.template(newsTpl, news));
@@ -16,5 +17,5 @@ define(function () {
         }
 
     });
-    return News;
+    return NewsDetail;
 });
