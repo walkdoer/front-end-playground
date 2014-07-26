@@ -20,6 +20,7 @@ define(function() {
             this._renderAdvertisement();
         },
 
+
         _renderAdvertisement: function() {
             var that = this;
             var date = new Date();
@@ -28,7 +29,6 @@ define(function() {
                 that.$el.find('.advertisement').append(that.ad.render().$el);
             });
         },
-
 
 
         _renderToolbar: function() {

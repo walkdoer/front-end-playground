@@ -6,6 +6,7 @@ define(function() {
     'use strict';
     var Component = require('./Com'),
         List = require('./list'),
+        Toolbar = require('components/Toolbar'),
         NewsBrief = require('components/NewsBrief');
     var router = require('router'),
         model = require('model');
@@ -37,6 +38,7 @@ define(function() {
         render: function(data) {
             var page = this;
             this.$el = $(_.template(pageTpl, data));
+            this._renderToolbar();
             model.getNews({groupId: this.groupId, pageNum: 0}).then(function (data) {
                 var newsArr = data.newsArr;
                 page.list = new List();
@@ -48,6 +50,11 @@ define(function() {
                 $listContainer.append(page.list.$el);
                 return this;
             });
+        },
+
+        _renderToolbar: function() {
+            this.toolbar = new Toolbar();
+            this.$el.find('.toolbar').append(this.toolbar.render().$el);
         }
 
     });
