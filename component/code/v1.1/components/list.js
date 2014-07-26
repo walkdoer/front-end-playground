@@ -1,12 +1,12 @@
 /**
- * components/list
+ * components/List
  */
 define(function () {
     'use strict';
 
     var h = require('h');
-    var Base = require('./base');
-    var List = Base.extend({
+    var Component = require('./Com');
+    var List = Component.extend({
 
         init: function () {
             this.list = [];

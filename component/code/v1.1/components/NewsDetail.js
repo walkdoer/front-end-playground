@@ -7,9 +7,9 @@
 define(function () {
     'use strict';
 
-    var Base = require('./base');
+    var Component = require('Com');
     var newsTpl = require('tpl/news');
-    var NewsDetail = Base.extend({
+    var NewsDetail = Component.extend({
 
         render: function (news) {
             var $el = $(_.template(newsTpl, news));

@@ -4,13 +4,13 @@
 define(function() {
 
     'use strict';
-    var Base = require('./base'),
+    var Component = require('./Com'),
         List = require('./list'),
         NewsBrief = require('components/NewsBrief');
     var router = require('router'),
         model = require('model');
     var pageTpl = require('tpl/newsPage.tpl');
-    var NewsPage = Base.extend({
+    var NewsPage = Component.extend({
 
         uiEvents: {
             'click .js-openNews': function(e) {

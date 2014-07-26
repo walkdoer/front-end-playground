@@ -4,15 +4,15 @@
 define(function() {
 
     'use strict';
-    var Base = require('./base'),
+    var Component = require('./Com'),
         Navigation = require('components/Navigation'),
+        Adervertisement = require('components/Adervertisement'),
         ConfigWindow = require('components/Window.Config');
     var model = require('model');
-    var pageTpl = require('/tpl/page/index'),
-        adTpl = require('tpl/advertisement.tpl');
+    var pageTpl = require('/tpl/page/index');
 
 
-    var Index = Base.extend({
+    var Index = Component.extend({
 
         render: function(data) {
             var $el = _.template(pageTpl, data);
@@ -48,9 +48,9 @@ define(function() {
         _renderAdvertisement: function() {
             var that = this;
             var date = new Date();
-            model.getAdvertisement(date).then(function(ad) {
-                var adHTML = _.template(adTpl, ad);
-                that.$el.find('.advertisement').append(adHTML);
+            model.getAdvertisement(date).then(function(adData) {
+                that.ad = new Adervertisement(adData);
+                that.$el.find('.advertisement').append(that.ad.render().$el);
             });
         }
 

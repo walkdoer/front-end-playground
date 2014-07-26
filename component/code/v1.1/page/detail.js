@@ -5,10 +5,10 @@ define(function() {
 
     'use strict';
     //页面的基本模块
-    var Base = require('./base');
+    var Component = require('./Com');
     var model = require('model');
     var pageTpl = require('/path/to/pageTpl');
-    var index = Base.extend({
+    var index = Component.extend({
 
         uiEvents: {
 
