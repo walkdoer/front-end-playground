@@ -6,9 +6,9 @@ define(function() {
     'use strict';
     //页面的基本模块
     var Component = require('./Com'),
+        NewsDetail = require('components/NewsDetail'),
         Toolbar = require('components/Toolbar');
     var model = require('model');
-    var pageTpl = require('/path/to/pageTpl');
     var index = Component.extend({
 
         uiEvents: {
@@ -30,10 +30,11 @@ define(function() {
 
 
         render: function(newsId) {
+            var that = this;
             this._renderToolbar();
             model.getNews(newsId).then(function (news) {
-                var $el = _.template(pageTpl, news);
-                $('#container').append($el);
+                that.newsDetail = new NewsDetail();
+                that.$el.append(that.newsDetail.render(news).$el);
             });
         },
 
