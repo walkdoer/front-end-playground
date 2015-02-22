@@ -40,5 +40,7 @@ Thumbs.db
 
 # Folder #
 ###################
-server/node_modules
-server/lib
+Programming-languages/javascript/server/node_modules
+Programming-languages/javascript/server/lib
+Data-Visualize/bower_components
+Data-Visualize/d3
