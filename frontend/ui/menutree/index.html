@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>this is title</title>
+    <meta charset="utf-8">
+</head>
+<style type="text/css">
+</style>
+<body>
+    <div class="menuTree"></div>
+</body>
+<script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="../../bower_components/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript" src="../../bower_components/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="./MenuTree.js"></script>
+<script type="text/javascript">
+    $('.menuTree').menuTree({
+        data: {
+            id: 'root',
+            text: 'Root',
+            children: [{
+                text: 'Menu A',
+                id: 'menu_a',
+                children: [{
+                    text: 'Menu A1',
+                    id: 'menu_a_1'
+                }, {
+                    text: 'Menu A2',
+                    id: 'menu_a_2',
+                    children: [{
+                        text: 'Menu A21',
+                        id: 'menu_a_2_1'
+                    }]
+                }, {
+                    text: 'Menu A3',
+                    id: 'menu_a_3',
+                    children: [{
+                        text: 'Menu A31',
+                        id: 'menu_a_3_1',
+                        children: [{
+                            text: 'Menu A311',
+                            id: 'menu_a_3_1_1'
+                        }, {
+                            text: 'Menu A312',
+                            id: 'menu_a_3_1_2'
+                        }]
+                    }]
+                }]
+            }, {
+                text: 'Menu B',
+                id: 'menu_b',
+                children: [{
+                    text: 'Menu B1',
+                    id: 'menu_b_1'
+                }, {
+                    text: 'Menu B2',
+                    id: 'menu_b_2'
+                }, {
+                    text: 'Menu B3',
+                    id: 'menu_b_3',
+                    children: [{
+                        text: 'Menu B31',
+                        id: 'menu_b_3_1'
+                    }, {
+                        text: 'Menu B32',
+                        id: 'menu_b_3_3'
+                    }, {
+                        text: 'Menu B33',
+                        id: 'menu_b_3_3'
+                    }, {
+                        text: 'Menu B34',
+                        id: 'menu_b_3_4'
+                    }]
+                }]
+            }]
+        }
+    });
+</script>
+</html>

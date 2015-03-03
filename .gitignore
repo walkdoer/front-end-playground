@@ -43,4 +43,5 @@ Thumbs.db
 Programming-languages/javascript/server/node_modules
 Programming-languages/javascript/server/lib
 Data-Visualize/bower_components
+frontend/bower_components
 Data-Visualize/d3
