@@ -3,90 +3,94 @@
 <head>
     <title>this is title</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="../../bower_components/jquery-ui/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="../jqtree/jqtree.css">
     <style type="text/css">
-    .ui-state-highlight,
-    .ui-state-hover,
-    .ui-state-active{
-        height:16px;
-    }
-
-    .ui-state-hover{
-        background: red;
-    }
-    .ui-state-active{
-        background: blue;
-    }
     </style>
 </head>
 <body>
     <div class="menuTree"></div>
 </body>
 <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script>
-<script type="text/javascript" src="../../bower_components/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript" src="../../bower_components/underscore/underscore-min.js"></script>
-<script type="text/javascript" src="./MenuTree.js"></script>
+<script type="text/javascript" src="../jqtree/tree.jquery.js"></script>
 <script type="text/javascript">
-    $('.menuTree').menuTree({
-        data: {
+    $('.menuTree').tree({
+        dragAndDrop: true,
+        autoOpen: true,
+        onCanMoveTo: function(moved_node, target_node, position) {
+            //console.log(moved_node, target_node, position);
+            if (target_node.isFolder() || target_node._is_folder) {
+                return true;
+            } else {
+                return position !== 'inside';
+            }
+        },
+        data: [{
             id: 'root',
-            text: 'Root',
+            label: 'Root',
+            _is_folder: true,
             children: [{
-                text: 'Menu A',
+                label: 'Menu A',
+                _is_folder: true,
                 id: 'menu_a',
                 children: [{
-                    text: 'Menu A1',
+                    label: 'Menu A1',
                     id: 'menu_a_1'
                 }, {
-                    text: 'Menu A2',
+                    label: 'Menu A2',
                     id: 'menu_a_2',
+                    _is_folder: true,
                     children: [{
-                        text: 'Menu A21',
+                        label: 'Menu A21',
                         id: 'menu_a_2_1'
                     }]
                 }, {
-                    text: 'Menu A3',
+                    label: 'Menu A3',
                     id: 'menu_a_3',
+                    _is_folder: true,
                     children: [{
-                        text: 'Menu A31',
+                        label: 'Menu A31',
                         id: 'menu_a_3_1',
+                        _is_folder: true,
                         children: [{
-                            text: 'Menu A311',
+                            label: 'Menu A311',
                             id: 'menu_a_3_1_1'
                         }, {
-                            text: 'Menu A312',
+                            label: 'Menu A312',
                             id: 'menu_a_3_1_2'
                         }]
                     }]
                 }]
             }, {
-                text: 'Menu B',
+                label: 'Menu B',
                 id: 'menu_b',
+                _is_folder: true,
                 children: [{
-                    text: 'Menu B1',
+                    label: 'Menu B1',
                     id: 'menu_b_1'
                 }, {
-                    text: 'Menu B2',
+                    label: 'Menu B2',
                     id: 'menu_b_2'
                 }, {
-                    text: 'Menu B3',
+                    label: 'Menu B3',
                     id: 'menu_b_3',
+                    _is_folder: true,
                     children: [{
-                        text: 'Menu B31',
+                        label: 'Menu B31',
                         id: 'menu_b_3_1'
                     }, {
-                        text: 'Menu B32',
+                        label: 'Menu B32',
+                        id: 'menu_b_3_2'
+                    }, {
+                        label: 'Menu B33',
                         id: 'menu_b_3_3'
                     }, {
-                        text: 'Menu B33',
-                        id: 'menu_b_3_3'
-                    }, {
-                        text: 'Menu B34',
+                        label: 'Menu B34',
                         id: 'menu_b_3_4'
                     }]
                 }]
             }]
-        }
+        }]
     });
 </script>
 </html>

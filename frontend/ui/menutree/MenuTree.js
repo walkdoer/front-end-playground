@@ -42,9 +42,26 @@
         var tree = buildTree(root);
         var $tree = buildDOMTree(tree);
         $el.append($tree);
-        console.log(tree);
+        this.initDnD();
         return this;
     }
+
+    MenuTree.prototype = {
+        constructor: MenuTree,
+        initDnD: function () {
+            var $ul = this.$el.find('ul');
+            $ul.sortable({
+                placeholder: "ui-state-highlight",
+                connectWith: "ul"
+            });
+            var $li = this.$el.find('li');
+            $li.droppable({
+                //activeClass: "ui-state-hover",
+                //hoverClass: "ui-state-active",
+            });
+            $ul.disableSelection();
+        }
+    };
 
     function buildTree(root) {
         var tree = new TreeNode(_.extend({
@@ -142,9 +159,7 @@
         return this.parent == null;
     };
 
-    MenuTree.prototype = {
-        constructor: MenuTree
-    };
+    
 
     return MenuTree;
 })();
