@@ -1,0 +1,72 @@
+.menuTree{
+    width: 198px;
+    height: 600px;
+    position: relative;
+    border: 1px solid #ccc;
+}
+.menuTree ul{}
+
+.menuTree ul.jqtree-tree li.jqtree-folder{
+  margin:0px;
+}
+
+.menuTree .jqtree-title{
+  display:block;
+  margin-right: 25px;
+}
+.menuTree .jqtree_common{
+  position: relative;
+}
+
+.menuTree > ul .jqtree-element {
+  border-left:1px dotted #9dbdd6;
+}
+.menuTree > ul .jqtree-element:last-child{
+  border-bottom: 1px solid #ccc;
+}
+
+.menuTree .jqtree-toggler{
+    position:absolute;
+    right:5px;
+    top:2px;
+}
+
+.menuTree .jqtree-element{
+  display: block;
+  height: 38px;
+  line-height: 36px;
+  color: #585858;
+  text-shadow: none!important;
+  font-size: 13px;
+  text-decoration: none;
+  border-bottom:1px dotted #9dbdd6;
+}
+
+.menuTree .jqtree-folder > .jqtree-element{
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ccc;
+}
+
+.menuTree > ul > li ul li:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 12px;
+  left: 0px;
+  top: 19px;
+  z-index: 1;
+  border-top: 1px dotted #9dbdd6;
+}
+
+.menuTree > ul { margin-top: 0px;}
+
+/*
+.menuTree li.jqtree-selected > a,
+.menuTree li.jqtree-selected > a:hover,
+.menuTree li.jqtree-selected > a:focus,
+.menuTree li.jqtree-selected > a:active {
+    background-color: #fff;
+    color: #2b7dbc;
+    font-weight: bold;
+    font-size: 13px;
+}*/

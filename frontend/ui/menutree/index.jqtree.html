@@ -4,6 +4,8 @@
     <title>this is title</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../jqtree/jqtree.css">
+    <link rel="stylesheet" type="text/css" href="./menuTree.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/font-awesome/css/font-awesome.css">
     <style type="text/css">
     </style>
 </head>
@@ -14,9 +16,15 @@
 <script type="text/javascript" src="../../bower_components/underscore/underscore-min.js"></script>
 <script type="text/javascript" src="../jqtree/tree.jquery.js"></script>
 <script type="text/javascript">
-    $('.menuTree').tree({
+    var $el = $('.menuTree').tree({
         dragAndDrop: true,
         autoOpen: true,
+        autoEscape: false,
+        closedIcon: $('<i class="fa fa-angle-down"></i>'),
+        openedIcon: $('<i class="fa fa-angle-up"></i>'),
+        onCreateLi: function (node, $li) {
+            return; 
+        },
         onCanMoveTo: function(moved_node, target_node, position) {
             //console.log(moved_node, target_node, position);
             if (target_node.isFolder() || target_node._is_folder) {
@@ -26,68 +34,63 @@
             }
         },
         data: [{
-            id: 'root',
-            label: 'Root',
+            label: 'Menu A',
             _is_folder: true,
+            id: 'menu_a',
             children: [{
-                label: 'Menu A',
+                label: 'Menu A1',
+                id: 'menu_a_1'
+            }, {
+                label: 'Menu A2',
+                id: 'menu_a_2',
                 _is_folder: true,
-                id: 'menu_a',
                 children: [{
-                    label: 'Menu A1',
-                    id: 'menu_a_1'
-                }, {
-                    label: 'Menu A2',
-                    id: 'menu_a_2',
-                    _is_folder: true,
-                    children: [{
-                        label: 'Menu A21',
-                        id: 'menu_a_2_1'
-                    }]
-                }, {
-                    label: 'Menu A3',
-                    id: 'menu_a_3',
-                    _is_folder: true,
-                    children: [{
-                        label: 'Menu A31',
-                        id: 'menu_a_3_1',
-                        _is_folder: true,
-                        children: [{
-                            label: 'Menu A311',
-                            id: 'menu_a_3_1_1'
-                        }, {
-                            label: 'Menu A312',
-                            id: 'menu_a_3_1_2'
-                        }]
-                    }]
+                    label: 'Menu A21',
+                    id: 'menu_a_2_1'
                 }]
             }, {
-                label: 'Menu B',
-                id: 'menu_b',
+                label: 'Menu A3',
+                id: 'menu_a_3',
                 _is_folder: true,
                 children: [{
-                    label: 'Menu B1',
-                    id: 'menu_b_1'
-                }, {
-                    label: 'Menu B2',
-                    id: 'menu_b_2'
-                }, {
-                    label: 'Menu B3',
-                    id: 'menu_b_3',
+                    label: 'Menu A31',
+                    id: 'menu_a_3_1',
                     _is_folder: true,
                     children: [{
-                        label: 'Menu B31',
-                        id: 'menu_b_3_1'
+                        label: '<a href="jquery">Menu A311</a>',
+                        id: 'menu_a_3_1_1'
                     }, {
-                        label: 'Menu B32',
-                        id: 'menu_b_3_2'
-                    }, {
-                        label: 'Menu B33',
-                        id: 'menu_b_3_3'
-                    }, {
-                        label: 'Menu B34',
-                        id: 'menu_b_3_4'
+                        label: 'Menu A312',
+                        id: 'menu_a_3_1_2'
                     }]
+                }]
+            }]
+        }, {
+            label: 'Menu B',
+            id: 'menu_b',
+            _is_folder: true,
+            children: [{
+                label: 'Menu B1',
+                id: 'menu_b_1'
+            }, {
+                label: 'Menu B2',
+                id: 'menu_b_2'
+            }, {
+                label: 'Menu B3',
+                id: 'menu_b_3',
+                _is_folder: true,
+                children: [{
+                    label: 'Menu B31',
+                    id: 'menu_b_3_1'
+                }, {
+                    label: 'Menu B32',
+                    id: 'menu_b_3_2'
+                }, {
+                    label: 'Menu B33',
+                    id: 'menu_b_3_3'
+                }, {
+                    label: 'Menu B34',
+                    id: 'menu_b_3_4'
                 }]
             }]
         }]
