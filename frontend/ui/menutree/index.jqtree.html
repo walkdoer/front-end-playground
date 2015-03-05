@@ -16,9 +16,137 @@
 <script type="text/javascript" src="../../bower_components/underscore/underscore-min.js"></script>
 <script type="text/javascript" src="../jqtree/tree.jquery.js"></script>
 <script type="text/javascript">
+    var labelTpl = _.template('<i class="menu-icon <%=iconClass%>"></i><a href=""><%=labelName%></a>');
+    /*{
+        "app" : "",
+        "menuId" : "refer",
+        "parentMenuId" : "root",
+        "labelName" : "来源分析",
+        "menuType" : "default_group",
+        "menuOrder" : 7,
+        "iconClass" : "icon-search",
+        "moduleId" : "",
+        "factoryType" : "",
+        "templateDir" : ""
+      }
+      */
+    var tree = {
+        labelName: 'root',
+        id: 'root',
+        children: [{
+            labelName: 'Menu A',
+            _is_folder: true,
+            iconClass: 'fa fa-dashboard',
+            id: 'menu_a',
+            children: [{
+                labelName: 'Menu A1',
+                id: 'menu_a_1'
+            }, {
+                labelName: 'Menu AX',
+                id: 'menu_a_x'
+            }, {
+                labelName: 'Menu A2',
+                iconClass: 'fa fa-tasks',
+                id: 'menu_a_2',
+                _is_folder: true,
+                children: [{
+                    labelName: 'Menu A21',
+                    id: 'menu_a_2_1'
+                }]
+            }, {
+                labelName: 'Menu A3',
+                iconClass: 'fa fa-user',
+                id: 'menu_a_3',
+                _is_folder: true,
+                children: [{
+                    labelName: 'Menu A31',
+                    id: 'menu_a_3_1',
+                    _is_folder: true,
+                    children: [{
+                        labelName: 'Menu A311',
+                        id: 'menu_a_3_1_1',
+                        _is_folder: true,
+                        children: [{
+                            labelName: 'Menu A3111',
+                            id: 'menu_a_3_1_1_1'
+                        }]
+                    }, {
+                        labelName: 'Menu A312',
+                        id: 'menu_a_3_1_2'
+                    }]
+                }]
+            }]
+        }, {
+            labelName: 'Menu B',
+            id: 'menu_b',
+            iconClass: 'fa fa-heartbeat',
+            _is_folder: true,
+            children: [{
+                labelName: 'Menu B1',
+                id: 'menu_b_1',
+                iconClass: 'fa fa-plus'
+            }, {
+                labelName: 'Menu B2',
+                id: 'menu_b_2'
+            }, {
+                labelName: 'Menu B3',
+                iconClass: 'fa fa-bus',
+                id: 'menu_b_3',
+                _is_folder: true,
+                children: [{
+                    labelName: 'Menu B31',
+                    id: 'menu_b_3_1'
+                }, {
+                    labelName: 'Menu B32',
+                    id: 'menu_b_3_2'
+                }, {
+                    labelName: 'Menu B33',
+                    id: 'menu_b_3_3'
+                }, {
+                    labelName: 'Menu B34',
+                    id: 'menu_b_3_4'
+                }]
+            }]
+        }, {
+            labelName: 'Menu C',
+            id: 'menu_c',
+            iconClass: 'fa fa-cube',
+            _is_folder: true,
+            children: [{
+                labelName: 'Menu C1',
+                id: 'menu_c_1'
+            }, {
+                labelName: 'Menu B2',
+                id: 'menu_c_2'
+            }, {
+                labelName: 'Menu B3',
+                id: 'menu_c_3',
+                _is_folder: true,
+                children: [{
+                    labelName: 'Menu B31',
+                    id: 'menu_c_3_1'
+                }, {
+                    labelName: 'Menu B32',
+                    id: 'menu_c_3_2'
+                }, {
+                    labelName: 'Menu B33',
+                    id: 'menu_c_3_3'
+                }, {
+                    labelName: 'Menu B34',
+                    id: 'menu_c_3_4'
+                }]
+            }]
+        }, {
+            labelName: 'Menu D',
+            id: 'menu_d',
+            iconClass: 'fa fa-server'
+        }]
+    };
+    buildMenuTreeData(tree);
+    
     var $el = $('.menuTree').tree({
         dragAndDrop: true,
-        autoOpen: true,
+        autoOpen: false,
         autoEscape: false,
         closedIcon: $('<i class="fa fa-angle-down"></i>'),
         openedIcon: $('<i class="fa fa-angle-up"></i>'),
@@ -34,75 +162,40 @@
                 return position !== 'inside';
             }
         },
-        data: [{
-            label: 'Menu A',
-            _is_folder: true,
-            id: 'menu_a',
-            children: [{
-                label: 'Menu A1',
-                id: 'menu_a_1'
-            }, {
-                label: 'Menu AX',
-                id: 'menu_a_x'
-            }, {
-                label: 'Menu A2',
-                id: 'menu_a_2',
-                _is_folder: true,
-                children: [{
-                    label: 'Menu A21',
-                    id: 'menu_a_2_1'
-                }]
-            }, {
-                label: 'Menu A3',
-                id: 'menu_a_3',
-                _is_folder: true,
-                children: [{
-                    label: 'Menu A31',
-                    id: 'menu_a_3_1',
-                    _is_folder: true,
-                    children: [{
-                        label: '<a href="jquery">Menu A311</a>',
-                        id: 'menu_a_3_1_1',
-                        _is_folder: true,
-                        children: [{
-                            label: 'Menu A3111',
-                            id: 'menu_a_3_1_1_1'
-                        }]
-                    }, {
-                        label: 'Menu A312',
-                        id: 'menu_a_3_1_2'
-                    }]
-                }]
-            }]
-        }, {
-            label: 'Menu B',
-            id: 'menu_b',
-            _is_folder: true,
-            children: [{
-                label: 'Menu B1',
-                id: 'menu_b_1'
-            }, {
-                label: 'Menu B2',
-                id: 'menu_b_2'
-            }, {
-                label: 'Menu B3',
-                id: 'menu_b_3',
-                _is_folder: true,
-                children: [{
-                    label: 'Menu B31',
-                    id: 'menu_b_3_1'
-                }, {
-                    label: 'Menu B32',
-                    id: 'menu_b_3_2'
-                }, {
-                    label: 'Menu B33',
-                    id: 'menu_b_3_3'
-                }, {
-                    label: 'Menu B34',
-                    id: 'menu_b_3_4'
-                }]
-            }]
-        }]
+        data: tree.children
     });
+    
+
+    function buildMenuTreeData(root) {
+        walkTree(root, function (node) {
+            if (node.iconClass) {
+                node.label = labelTpl(node);
+            } else {
+                node.label = node.labelName;
+            }
+        });
+    }
+
+    function walkTree(parentElement, func) {
+        parentElement.depth = 0;
+        parentElement.next = null;
+        var children, i, len, child;
+        var depth;
+        current = parentElement;
+        while (current) {
+          depth = current.depth;
+          children = current.children;
+          func(current);
+          //removes this item from the linked list
+          current = current.next;
+          for (i = 0, len = children ? children.length : 0; i < len; i++) {
+            child = children[i];
+            child.depth = depth+1;
+            //place new item at the head of the list
+            child.next = current;
+            current = child;
+          }
+        }
+    }
 </script>
 </html>

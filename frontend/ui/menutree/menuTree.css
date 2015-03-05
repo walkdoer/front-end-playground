@@ -1,8 +1,13 @@
+.menuTree{
+    width: 198px;
+    height: 600px;
+    overflow:auto;
+    border: 1px solid #ccc;
+}
 .jqtree-tree{
     width: 198px;
     height: 600px;
-    position: relative;
-    border: 1px solid #ccc;
+    margin-top: 0px;
 }
 
 .jqtree-tree .jqtree_common{
@@ -28,9 +33,11 @@
     border-bottom:1px solid #ccc;
 }
 
-.jqtree-tree .jqtree-folder ul li.jqtree-folder:last-child.jqtree-closed > .jqtree-element{
-
+.jqtree-tree .jqtree-folder ul li.jqtree-folder.jqtree-closed:last-child > .jqtree-element{
+  border-bottom: 0px;
 }
+
+
 ul.jqtree-tree li.jqtree-folder.jqtree-closed{
   margin-bottom:0px;
 }
@@ -65,14 +72,34 @@ ul.jqtree-tree li.jqtree-folder:last-child{
     top:2px;
 }
 
+.jqtree-tree .menu-icon{
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 18px;
+  font-weight: normal;
+  margin-right: 8px;
+}
+
 .jqtree-tree .jqtree-title,
 .jqtree-tree .jqtree-title.jqtree-title-folder{
   display:block;
   margin-right: 25px;
-  margin-left:25px;
 }
 
-/*.jqtree-tree .jqtree_common .jqtree-element{
+.jqtree-tree .jqtree-title{
+  margin-left:20px;
+}
+
+.jqtree-tree > li.jqtree_common > .jqtree-element .jqtree-title{
+  margin-left:10px;
+}
+
+.jqtree-tree .jqtree-title.jqtree-title-folder{
+  margin-left: 20px;
+}
+
+.jqtree-tree .jqtree-folder ul .jqtree-element:before{
   content: "";
   display: inline-block;
   position: absolute;
@@ -81,7 +108,7 @@ ul.jqtree-tree li.jqtree-folder:last-child{
   top: 19px;
   z-index: 1;
   border-top: 1px dotted #9dbdd6;
-}*/
+}
 
 
 
