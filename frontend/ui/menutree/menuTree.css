@@ -70,6 +70,7 @@ ul.jqtree-tree li.jqtree-folder:last-child{
     position:absolute;
     right:5px;
     top:2px;
+    z-index: 6;
 }
 
 .jqtree-tree .menu-icon{
@@ -84,19 +85,19 @@ ul.jqtree-tree li.jqtree-folder:last-child{
 .jqtree-tree .jqtree-title,
 .jqtree-tree .jqtree-title.jqtree-title-folder{
   display:block;
-  margin-right: 25px;
+  margin: 0px;
 }
 
 .jqtree-tree .jqtree-title{
-  margin-left:20px;
+ padding-left:20px; 
 }
 
 .jqtree-tree > li.jqtree_common > .jqtree-element .jqtree-title{
-  margin-left:10px;
+  padding-left:10px;
 }
 
 .jqtree-tree .jqtree-title.jqtree-title-folder{
-  margin-left: 20px;
+  padding-left: 20px;
 }
 
 .jqtree-tree .jqtree-folder ul .jqtree-element:before{
