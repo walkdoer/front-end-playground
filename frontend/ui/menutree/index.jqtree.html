@@ -22,6 +22,7 @@
         autoEscape: false,
         closedIcon: $('<i class="fa fa-angle-down"></i>'),
         openedIcon: $('<i class="fa fa-angle-up"></i>'),
+        slide: false,
         onCreateLi: function (node, $li) {
             return; 
         },
@@ -41,6 +42,9 @@
                 label: 'Menu A1',
                 id: 'menu_a_1'
             }, {
+                label: 'Menu AX',
+                id: 'menu_a_x'
+            }, {
                 label: 'Menu A2',
                 id: 'menu_a_2',
                 _is_folder: true,
@@ -58,7 +62,12 @@
                     _is_folder: true,
                     children: [{
                         label: '<a href="jquery">Menu A311</a>',
-                        id: 'menu_a_3_1_1'
+                        id: 'menu_a_3_1_1',
+                        _is_folder: true,
+                        children: [{
+                            label: 'Menu A3111',
+                            id: 'menu_a_3_1_1_1'
+                        }]
                     }, {
                         label: 'Menu A312',
                         id: 'menu_a_3_1_2'

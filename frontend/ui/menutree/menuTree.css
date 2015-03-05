@@ -1,4 +1,65 @@
-.menuTree{
+.jqtree-tree{
+    width: 198px;
+    height: 600px;
+    position: relative;
+    border: 1px solid #ccc;
+}
+
+.jqtree-tree .jqtree_common{
+  position: relative;
+}
+
+.jqtree-tree .jqtree-folder ul .jqtree-element{
+  border-left:1px dotted #9dbdd6;
+}
+
+.jqtree-tree .jqtree-element{
+  display: block;
+  height: 38px;
+  line-height: 36px;
+  color: #585858;
+  text-shadow: none!important;
+  font-size: 13px;
+  text-decoration: none;
+  border-bottom:1px dotted #9dbdd6;
+
+}
+.jqtree-tree .jqtree-folder > .jqtree-element{
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ccc;
+}
+ul.jqtree-tree li.jqtree-folder{
+  margin-bottom:0px;
+}
+
+.jqtree-tree .jqtree-toggler{
+    position:absolute;
+    right:5px;
+    top:2px;
+}
+
+.jqtree-tree .jqtree-title,
+.jqtree-tree .jqtree-title.jqtree-title-folder{
+  display:block;
+  margin-right: 25px;
+  margin-left:25px;
+}
+
+/*.jqtree-tree .jqtree_common .jqtree-element{
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 12px;
+  left: 0px;
+  top: 19px;
+  z-index: 1;
+  border-top: 1px dotted #9dbdd6;
+}*/
+
+
+
+
+/*.menuTree{
     width: 198px;
     height: 600px;
     position: relative;
@@ -10,19 +71,46 @@
   margin:0px;
 }
 
-.menuTree .jqtree-title{
+.menuTree .jqtree-tree .jqtree-title{
   display:block;
   margin-right: 25px;
+}
+
+.menuTree .jqtree-tree .jqtree-title.jqtree-title-folder{
+  margin-left: 1.2rem
 }
 .menuTree .jqtree_common{
   position: relative;
 }
 
-.menuTree > ul .jqtree-element {
+.menuTree ul .jqtree-element {
   border-left:1px dotted #9dbdd6;
+  border-bottom:1px dotted #9dbdd6;
 }
-.menuTree > ul .jqtree-element:last-child{
+.menuTree .jqtree-folder li.jqtree_common:last-child .jqtree-element {
+    border-bottom: 0px;
+}
+
+.menuTree .jqtree-folder:last-child li.jqtree_common:last-child .jqtree-element{
+    border-bottom:1px dotted #9dbdd6;
+}
+
+.menuTree .jqtree-folder:last-child li.jqtree_common:last-child .jqtree-folder .jqtree-element{
+  border-bottom:1px solid #9dbdd6;
+}
+
+
+
+.menuTree .jqtree-folder.jqtree-closed .jqtree-element{
+  border-bottom: 0px solid #ccc;
+}
+
+.menuTree > .jqtree-tree > .jqtree-folder.jqtree-closed:last-child .jqtree-element{
   border-bottom: 1px solid #ccc;
+}
+
+.menuTree  ul .jqtree-folder > .jqtree-element{
+  border-top: 1px solid #ccc;
 }
 
 .menuTree .jqtree-toggler{
@@ -60,13 +148,13 @@
 
 .menuTree > ul { margin-top: 0px;}
 
+*/
+
+/*.menuTree .jqtree-folder  .jqtree-folder .jqtree-element:first-child{
+  border-top: 0px solid #ccc;
+}*/
+
 /*
-.menuTree li.jqtree-selected > a,
-.menuTree li.jqtree-selected > a:hover,
-.menuTree li.jqtree-selected > a:focus,
-.menuTree li.jqtree-selected > a:active {
-    background-color: #fff;
-    color: #2b7dbc;
-    font-weight: bold;
-    font-size: 13px;
+.menuTree ul > li:last-child .jqtree-element{
+  border-bottom: 0px;
 }*/
