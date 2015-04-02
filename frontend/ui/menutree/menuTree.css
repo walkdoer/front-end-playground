@@ -1,13 +1,49 @@
-.menuTree{
-    width: 198px;
-    height: 600px;
-    overflow:auto;
-    border: 1px solid #ccc;
-}
+
 .jqtree-tree{
-    width: 198px;
-    height: 600px;
+    width: 100%;
     margin-top: 0px;
+    color: #585858;
+}
+
+.menutree ul.jqtree-tree li.jqtree-selected:after{
+  display: block;
+  content: "";
+  position: absolute!important;
+  right: 0;
+  top: 4px;
+  border: 8px solid transparent;
+  border-width: 14px 10px;
+  border-right-color: #2b7dbc;
+}
+.menutree ul.jqtree-tree li.jqtree-selected > .jqtree-element,
+.menutree ul.jqtree-tree li.jqtree-selected > .jqtree-element:hover {
+    background-color: #FFF;
+    background-image: none;
+}
+.menutree ul.jqtree-tree li.jqtree-selected > .jqtree-element > .jqtree-title{
+    color: #2b7dbc;
+    font-weight: bold;
+}
+
+
+
+.menutree ul.jqtree-tree li.jqtree-selected > .jqtree-element > .jqtree-title a:visited,
+.menutree ul.jqtree-tree li.jqtree-selected > .jqtree-element > .jqtree-title a:link,
+.menutree ul.jqtree-tree li.jqtree-selected > .jqtree-element > .jqtree-title a:hover,
+.menutree ul.jqtree-tree li.jqtree-selected > .jqtree-element > .jqtree-title a {
+   color: #2b7dbc;
+}
+.jqtree-tree a:visited,
+.jqtree-tree a:link,
+.jqtree-tree a:hover,
+.jqtree-tree a{
+  color: #585858;
+  text-decoration:none;
+}
+
+.jqtree-tree li.jqtree_common .jqtree-element{
+    background:transparent;
+    color: #585858;
 }
 
 .jqtree-tree .jqtree_common{
@@ -15,7 +51,7 @@
 }
 
 .jqtree-tree .jqtree-folder{
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .jqtree-tree .jqtree-folder.jqtree-closed{
@@ -30,7 +66,7 @@
     border-bottom:0px;
 }
 .jqtree-tree .jqtree-folder ul li.jqtree-folder:last-child > .jqtree-element{
-    border-bottom:1px solid #ccc;
+    border-bottom:1px solid #e5e5e5;
 }
 
 .jqtree-tree .jqtree-folder ul li.jqtree-folder.jqtree-closed:last-child > .jqtree-element{
@@ -54,12 +90,23 @@ ul.jqtree-tree li.jqtree-folder.jqtree-closed{
   border-bottom:1px dotted #9dbdd6;
 
 }
-.jqtree-tree .jqtree-folder > .jqtree-element{
+.jqtree-tree li.jqtree-folder > .jqtree-element{
   background-color: #f9f9f9;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #e5e5e5;
 }
 ul.jqtree-tree li.jqtree-folder{
   margin-bottom:0px;
+  background-color:#FFF;
+}
+
+.jqtree-tree > li.jqtree_common{
+  background-color:#f9f9f9;
+}
+
+.jqtree-tree li.jqtree-folder{
+  -webkit-box-shadow: inset 0px 0px 5px rgba(0,0,0,0.13);
+  -moz-box-shadow: inset 0px 0px 5px rgba(0,0,0,0.13);
+  box-shadow: inset 1px 1px 5px rgba(0,0,0,0.13);
 }
 
 ul.jqtree-tree li.jqtree-folder:last-child{

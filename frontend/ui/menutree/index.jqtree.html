@@ -164,7 +164,47 @@
         },
         data: tree.children
     });
-    
+
+    $el.bind(
+        'tree.move',
+        function(event) {
+            console.log('moved_node', event.move_info.moved_node);
+            console.log('target_node', event.move_info.target_node);
+            console.log('position', event.move_info.position);
+            console.log('previous_parent', event.move_info.previous_parent);
+        }
+    );
+
+    $el.bind(
+        'tree.click',
+        function(event) {
+            // The clicked node is 'event.node'
+            var node = event.node;
+            //console.log(node);
+            $el.tree('toggle', node);
+            $el.tree('selectNode', node);
+            event.stopPropagation();
+            event.preventDefault();
+        }
+    );
+
+    $el.bind(
+        'tree.select',
+        function(event) {
+            var node = event.node;
+            if (node) {
+                console.log(node);
+                console.log($el.tree('isNodeSelected', node));
+            }
+            else {
+                console.log('####', event);
+                // event.node is null
+                // a node was deselected
+                // e.previous_node contains the deselected node
+            }
+        }
+    );
+
 
     function buildMenuTreeData(root) {
         walkTree(root, function (node) {
