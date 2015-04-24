@@ -24,19 +24,19 @@ function foo(x) {
     return x * 2;
 }
 var foo;
-console.debug(a);
+console.debug(foo);
 
 /** code 3 **/
 function bar(x, y, a) {
     arguments[2] = 10;
-    console.debug(a);
+    console.debug(a);//输出10
 }
 bar(1, 2, 3);
 
 /** code 4 **/
 
 function test() {
-    alert(this);
+    alert(this); //widnow
 }
 test.call(null);
 
