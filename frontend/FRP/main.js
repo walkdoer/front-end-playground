@@ -70,4 +70,22 @@
     var buttonEnabled = usernameEntered.and(ageEntered).and(usernameAvailable);
     buttonEnabled.not().onValue($confirmBtn, 'attr', 'disabled');
 
+    /** 其他例子 */
+    Bacon.interval(1000).map(function() {
+        return new Date().getTime();
+    }).log();
+
+    /** 自定义Stream */
+    var timer = Bacon.fromBinder(function(sink) {
+    var id = setInterval(function() {
+            sink(new Date().getTime())
+        }, 1000)
+        return function() {
+            clearInterval(id)
+        }
+    })
+    timer.take(5).onValue(function(value) {
+        $("#events").append($("<li>").text(value))
+    })
+
 }(window);
