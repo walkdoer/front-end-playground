@@ -1,0 +1,170 @@
+@import "_component_a.scss";
+
+$mainColor: #F2E2A3;
+$siteWidth: 968px;
+$borderStyle: solid;
+
+
+body{
+    color: $mainColor;
+    width: $siteWidth;
+    border: 1px $borderStyle $mainColor;
+}
+
+
+
+.test{
+    $mainColor: green; /*作用域*/
+    font-weight: bold;
+    .kick-btn{
+        color: $mainColor;
+        font-weight: bolder;
+    }
+}
+
+
+div {
+    .subDiv{
+        display: flex;
+    }
+    button {
+        display: block;
+    }
+
+    span {
+        display: inline-block;
+    }
+}
+
+section {
+    margin:10px;
+    nav {
+        height:25px;
+        a {
+            color:#0982c1;
+            &:hover { /*& 引用父选择器*/
+                text-decoration:underline;
+            }
+        }
+    }
+}
+
+/******************** Mixin **************************/
+
+/*声明一个Mixin叫作“error”*/
+@mixin error($borderWidth:2px, $color: #F00){
+    border:$borderWidth solid $color;
+    color: $color;
+}
+
+/*调用error Mixins*/
+.generic-error {
+    @include error();/*直接调用error mixins*/
+}
+
+.login-error {
+    @include error(5px, #F11);/*调用error mixins，并将参数$borderWidth的值重定义为5px*/
+}
+
+
+
+
+/*********************** Extend/Inheritance ********************/
+
+
+.message {
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: #333;
+}
+
+.success {
+  @extend .message;
+  border-color: green;
+}
+
+.error {
+  @extend .message;
+  border-color: red;
+}
+
+.warning {
+  @extend .message;
+  border-color: yellow; // comment
+}
+
+
+
+/************* Operators ********************/
+
+.container { width: 100%; }
+
+article[role="main"] {
+  float: left;
+  width: 600px / 960px * 100%;
+}
+
+aside[role="complimentary"] {
+  float: right;
+  width: 300px / 960px * 100%;
+}
+
+
+
+
+/****************** 颜色函数 *********************/
+.light-background{
+    background-color: lighten($mainColor, 10%);
+}
+
+.dark-background{
+    background-color: darken($mainColor, 50%);
+}
+
+#opacity-10 {
+  background: rgba(invert($mainColor), .5)
+}
+
+#opacity-20 {
+  background: rgba(saturate($mainColor, 10), .5)
+}
+
+/***************** 条件语句 ******************/
+$type: monster;
+p {
+  @if $type == ocean {
+    color: blue;
+  } @else if $type == matador {
+    color: red;
+  } @else if $type == monster {
+    color: green;
+  } @else {
+    color: black;
+  }
+}
+
+/************ 循环语句 ************************/
+
+/*** @for ***/
+
+@for $i from 1 to 4 {
+    item_#{$i} {
+        width: 2em * $i;
+        color: rgb($i * 4, $i*10, $i * 20)
+    }
+}
+
+/*** @each ***/
+
+@each $animal in puma, pig, cat, dog{
+    .animal_#{$animal} {
+        background-image: url('./images/#{$animal}.jpg');
+    }
+}
+
+/*** @whild **/
+$i: 6;
+@while $i > 0 {
+  .item-#{$i} { width: 2em * $i; }
+  $i: $i - 2;
+}
