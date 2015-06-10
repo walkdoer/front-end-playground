@@ -2,3 +2,109 @@ doubleMe x = x + x
 doubleUs x y = x*2 + y*2
 doubleSmallNumber x = if x > 100 then x else x * 2
 doubleSmallNumber' x = (if x > 100 then x else x * 2) + 1
+--boomBangs [7..13]   ["BOOM!","BOOM!","BANG!","BANG!"] 
+boomBangs xs = [ if x < 10 then "BOOM!" else "BANG!" | x <- xs, odd x]
+
+-- 实现一个与length函数一样的函数length'
+
+length' xs = sum [1 | _ <- xs]
+
+
+-- remove non upper case
+removeNonUpperCase st = [c | c <- st, c `elem` ['A'..'Z']]
+
+
+factorial :: Integer -> Integer
+factorial n = product [1..n]
+
+
+
+-- pattern matching
+factoriala :: (Integral a) => a -> a
+factoriala 0 = 1
+factoriala n = n * factoriala(n - 1)
+
+
+-- 利用pattern  x:xs 实现 head
+head' :: [a] -> a
+head' [] = error "Can't call head on an empty list, dummy!"
+head' (x:_) = x
+
+
+-- 更加复杂的例子
+
+tell :: (Show a) => [a] -> String  
+tell [] = "The list is empty"  
+tell (x:[]) = "The list has one element: " ++ show x  
+tell (x:y:[]) = "The list has two elements: " ++ show x ++ " and " ++ show y  
+tell (x:y:_) = "This list is long. The first two elements are: " ++ show x ++ " and " ++ show y  
+
+-- 递归实现的length
+
+length'' :: (Num b) => [a] -> b
+length'' [] = 0
+length'' (_:xs) = 1 + length' xs
+
+-- sum
+sum' :: (Num a) => [a] -> a  
+sum' [] = 0  
+sum' (x:xs) = x + sum' xs  
+
+
+-- max
+
+max' :: (Ord a) => a -> a -> a
+max' a b
+    | a > b = a
+    | otherwise = b
+
+
+-- compare
+
+myCompare :: (Ord a) => a -> a -> Ordering
+a `myCompare` b
+    | a > b = GT
+    | a == b = EQ
+    | otherwise = LT
+
+-- 一个不错的例子，用来讲解Guard
+bmiTell :: (RealFloat a) => a -> a -> String
+bmiTell weight height
+    | bmi <= skinny = "You're underweight, you emo, you!"
+    | bmi <= normal = "You're supposedly normal. Pffft, I bet you're ugly!"
+    | bmi <= fat    = "You're fat! Lose some weight, fatty!"
+    | otherwise     = "You're a whale, congratulations!"
+    where bmi = weight / height ^ 2
+          skinny = 18.5
+          normal = 25.0
+          fat = 30.0
+
+-- 另外一个例子，讲解了如何对参数进行处理，例如这里去除string的第一个字母
+initials :: String -> String -> String
+initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
+    where (f:_) = firstname
+          (l:_) = lastname
+
+
+-- let <binding> in <Expression>
+cylinder :: (RealFloat a) => a -> a -> a  
+cylinder r h = 
+    let sideArea = 2 * pi * r * h  
+        topArea = pi * r ^2  
+    in  sideArea + 2 * topArea
+
+
+-- 递归 maximum
+maximum' :: (Ord a) => [a] -> a
+maximum' [] = error "maximum of empty list"  
+maximum' [x] = x  
+maximum' (x:xs)   
+    | x > maxTail = x  
+    | otherwise = maxTail  
+    where maxTail = maximum' xs  
+
+-- 使用max来简化 maximum 的逻辑
+maximum' :: (Ord a) => [a] -> a
+maximum' [] = error "maximum of empty list"
+maximum' [x] = x
+maximum' (x:xs) = max x (maximum' xs)
