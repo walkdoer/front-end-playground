@@ -142,10 +142,50 @@ elem'' a (x:xs)
     | a == x = True
     | otherwise = a `elem''` xs
 
-
+-- 快速排序  使用list comprehensions
 quicksort :: (Ord a) => [a] -> [a]
 quicksort [] = []
 quicksort (x:xs) =
     let smallerSorted = quicksort [a | a <- xs, a <= x]
         biggerSorted = quicksort [a | a <-xs, a > x]
+    in  smallerSorted ++ [x] ++ biggerSorted
+
+-- fibonacci 版本1 使用pattern match
+fibonacci ::Int -> Int
+fibonacci 0 = 0
+fibonacci 1 = 1
+fibonacci n = fibonacci (n - 1) + fibonacci (n - 2)
+
+
+-- fibonacci 版本2 使用 guards
+fib :: Integer -> Integer
+fib n
+    | n == 0  = 0
+    | n == 1  = 1
+    | n > 1   = fib (n-1) + fib (n-2)
+
+
+multThree :: (Num a) => a -> a -> a -> a
+multThree x y z = x * y * z
+
+
+applyTwice :: (a -> a) -> a -> a
+applyTwice f x = f (f x)
+
+zipwith' :: (a -> b -> c) -> [a] -> [b] -> [c]
+zipwith' _ [] _ = []
+zipwith' _ _ [] = []
+zipwith' f (x:xs) (y:ys) = f x y : zipwith' f xs ys
+
+
+flip' :: (a -> b -> c) -> b -> a -> c  
+flip' f y x = f x y  
+
+
+-- 快速排序，利用filter
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x:xs) =
+    let smallerSorted = quicksort (filter (<=x) xs)
+        biggerSorted = quicksort (filter (>x) xs)
     in  smallerSorted ++ [x] ++ biggerSorted
