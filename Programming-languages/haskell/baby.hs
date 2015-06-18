@@ -183,9 +183,55 @@ flip' f y x = f x y
 
 
 -- 快速排序，利用filter
-quicksort :: (Ord a) => [a] -> [a]
-quicksort [] = []
-quicksort (x:xs) =
+quicksort' :: (Ord a) => [a] -> [a]
+quicksort' [] = []
+quicksort' (x:xs) =
     let smallerSorted = quicksort (filter (<=x) xs)
         biggerSorted = quicksort (filter (>x) xs)
     in  smallerSorted ++ [x] ++ biggerSorted
+
+
+-- chain
+
+chain :: (Integral a) => a -> [a]
+chain 1 = [1]
+chain n
+    | even n = n:chain (n `div` 2)
+    | odd n  = n:chain (n * 3 + 1)
+
+
+numLongChains :: Int
+numLongChains = length (filter isLong (map chain [1..100]))
+    where isLong xs = length xs > 15
+
+
+-- Lambdas
+
+-- 使用lambda和foldr实现map
+map' :: (a -> b) -> [a] -> [b]
+map' f xs = foldr (\x acc -> f x : acc) [] xs
+-- map' f xs = foldl (\acc x -> acc ++ [f x]) [] xs 由于++的性能比：差，所以更多的是使用foldr
+
+-- 使用lambda实现sum
+suml :: (Num a) => [a] -> a
+suml xs = foldl(\acc x -> acc + x) 0 xs
+
+-- 使用lambda实现maximuml
+maximuml :: (Ord a) => [a] -> a
+maximuml = foldr1 (\x acc -> if x > acc then x else acc)
+
+
+reversel :: [a] -> [a]
+reversel = foldl (\acc x-> x:acc) []
+
+
+productl :: (Num a) => [a] -> a
+productl = foldr1 (*)
+
+
+filterl :: (a -> Bool) -> [a] -> [a]
+filterl f = foldr (\x acc-> if f x then x:acc else acc) []
+
+-- head的实现最好还是之前用的pattern match，这里只是为了举例
+headl :: [a] -> a
+headl = foldr1 (\x _ -> x)
