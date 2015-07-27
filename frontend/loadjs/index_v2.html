@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>this is title</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+    </style>
+</head>
+<body>
+    <div class="menuTree"></div>
+</body>
+<script type="text/javascript" src="./load_v2.js"></script>
+<script type="text/javascript">
+    loadJS([
+        "./test.js",
+        "./test2.js",
+        "./test3.js"
+    ], {
+        onProgress: function (progress) {
+            console.log(progress);
+        },
+
+        onComplete: function () {
+            console.log('done!');
+        }
+    });
+</script>
+</html>

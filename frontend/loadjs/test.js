@@ -1,3 +1,3 @@
 (function () {
-    console.log('hello hell');
+    console.log('hello world 1');
 })(window);
