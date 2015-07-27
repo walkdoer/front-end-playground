@@ -1,0 +1,136 @@
+@charset "UTF-8";
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+nav li {
+  display: inline-block; }
+nav a {
+  display: block;
+  padding: 6px 12px;
+  text-decoration: none; }
+
+body {
+  color: #F2E2A3;
+  width: 968px;
+  border: 1px solid #F2E2A3; }
+
+.test {
+  /*作用域*/
+  font-weight: bold; }
+  .test .kick-btn {
+    color: green;
+    font-weight: bolder; }
+
+div .subDiv {
+  display: flex; }
+div button {
+  display: block; }
+div span {
+  display: inline-block; }
+
+section {
+  margin: 10px; }
+  section nav {
+    height: 25px; }
+    section nav a {
+      color: #0982c1; }
+      section nav a:hover {
+        /*& 引用父选择器*/
+        text-decoration: underline; }
+
+/******************** Mixin **************************/
+/*声明一个Mixin叫作“error”*/
+/*调用error Mixins*/
+.generic-error {
+  border: 2px solid #F00;
+  color: #F00;
+  /*直接调用error mixins*/ }
+
+.login-error {
+  border: 5px solid #F11;
+  color: #F11;
+  /*调用error mixins，并将参数$borderWidth的值重定义为5px*/ }
+
+/*********************** Extend/Inheritance ********************/
+.message, .success, .error, .warning {
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: #333; }
+
+.success {
+  border-color: green; }
+
+.error {
+  border-color: red; }
+
+.warning {
+  border-color: yellow; }
+
+/************* Operators ********************/
+.container {
+  width: 100%; }
+
+article[role="main"] {
+  float: left;
+  width: 62.5%; }
+
+aside[role="complimentary"] {
+  float: right;
+  width: 31.25%; }
+
+/****************** 颜色函数 *********************/
+.light-background {
+  background-color: #f8f0d0; }
+
+.dark-background {
+  background-color: #836d13; }
+
+#opacity-10 {
+  background: rgba(13, 29, 92, 0.5); }
+
+#opacity-20 {
+  background: rgba(247, 229, 158, 0.5); }
+
+/***************** 条件语句 ******************/
+p {
+  color: green; }
+
+/************ 循环语句 ************************/
+/*** @for ***/
+item_1 {
+  width: 2em;
+  color: #040a14; }
+
+item_2 {
+  width: 4em;
+  color: #081428; }
+
+item_3 {
+  width: 6em;
+  color: #0c1e3c; }
+
+/*** @each ***/
+.animal_puma {
+  background-image: url("./images/puma.jpg"); }
+
+.animal_pig {
+  background-image: url("./images/pig.jpg"); }
+
+.animal_cat {
+  background-image: url("./images/cat.jpg"); }
+
+.animal_dog {
+  background-image: url("./images/dog.jpg"); }
+
+/*** @whild **/
+.item-6 {
+  width: 12em; }
+
+.item-4 {
+  width: 8em; }
+
+.item-2 {
+  width: 4em; }
+
+/*# sourceMappingURL=syntax.css.map */

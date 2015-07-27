@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>this is title</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+    </style>
+</head>
+<body>
+    <div class="menuTree"></div>
+</body>
+<script type="text/javascript" src="./load.js"></script>
+<script type="text/javascript">
+    loadjs("./test.js", "test");
+    loadjs.ready("test", function () {
+        console.log('test ready');
+    });
+</script>
+</html>
