@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>this is title</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+    </style>
+</head>
+<body>
+    <div class="menuTree"></div>
+</body>
+<script type="text/javascript" src="./page.js"></script>
+<script type="text/javascript">
+page('/', index);
+page('/user/:user', showUser);
+page('/user/:user/edit', editUser);
+page('/user/:user/album', album);
+page('/user/:user/album/sort', sort);
+page('*', notfound);
+page({
+    hashbang: true
+});
+
+function index() {
+    console.log('page index');
+}
+
+function showUser(user) {
+    console.log(user);
+    console.log('page user');
+}
+
+function editUser() {
+    console.log('edit user');
+}
+
+function album() {
+    console.log('user album');
+}
+
+function sort() {
+    console.log('user album sort');
+}
+
+function notfound() {
+    console.log('not found');
+}
+
+</script>
+</html>
