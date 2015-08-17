@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Flip Demo with flip.js</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+    html,body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .page {
+        height: 100%;
+    }
+    #page-1 {
+        background-color: gray;
+    }
+    #page-2 {
+        background-color: red;
+    }
+    #page-3 {
+        background-color: blue;
+    }
+    #page-4 {
+        background-color: orange;
+    }
+    </style>
+</head>
+<body>
+    <div class="page" id="page-1"></div>
+    <div class="page" id="page-2"></div>
+    <div class="page" id="page-3"></div>
+    <div class="page" id="page-4"></div>
+</body>
+<script type="text/javascript" src="./flip.min.js"></script>
+<script type="text/javascript">
+var container = document.body;
+var pages = document.querySelectorAll('.page');
+var slip = Slip(container, 'y').webapp(pages);
+</script>
+</html>
