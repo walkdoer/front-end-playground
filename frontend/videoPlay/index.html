@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>HTML5 Video Play</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+    html,body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    </style>
+</head>
+<body>
+  <video id="video">
+    <source src="video.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+  <button onClick="player.play()">Play</button>
+  <button onClick="player.pause()">Pause</button>
+</body>
+<script type="text/javascript" src="./video.js"></script>
+<script type="text/javascript">
+var player = new VideoPlayer('#video');
+</script>
+</html>
