@@ -1,0 +1,202 @@
+#!/bin/bash
+
+
+DIGIT_COLOR=RED
+LETTER_COLOR=YELLOW
+PUNCT_COLOR=YELLOW
+
+#TIMEZONES="America/New_York Europe/London Asia/Baghdad Asia/Singapore Asia/Tokyo"
+
+BLACK=0 RED=1 GREEN=2 YELLOW=3 BLUE=4 MAGENTA=5 CYAN=6 WHITE=7
+DC="\e[3${!DIGIT_COLOR};4${!DIGIT_COLOR}m"
+LC="\e[3${!LETTER_COLOR};4${!LETTER_COLOR}m"
+PC="\e[3${!PUNCT_COLOR};4${!PUNCT_COLOR}m"
+NC="\e[m"
+
+NUM[0]="######|##__##|##__##|##__##|######"
+NUM[1]="____##|____##|____##|____##|____##"
+NUM[2]="######|____##|######|##____|######"
+NUM[3]="######|____##|######|____##|######"
+NUM[4]="##__##|##__##|######|____##|____##"
+NUM[5]="######|##____|######|____##|######"
+NUM[6]="######|##____|######|##__##|######"
+NUM[7]="######|____##|____##|____##|____##"
+NUM[8]="######|##__##|######|##__##|######"
+NUM[9]="######|##__##|######|____##|____##"
+A="_AAAA_|AA__AA|AAAAAA|AA__AA|AA__AA"
+B="AAAAA_|AA__AA|AAAAA_|AA__AA|AAAAAA"
+C="_AAAA_|AA__AA|AA____|AA__AA|_AAAA_"
+D="AAAAA_|AA__AA|AA__AA|AA__AA|AAAAA_"
+E="AAAAAA|AA____|AAAAAA|AA____|AAAAAA"
+F="AAAAAA|AA____|AAAA__|AA____|AA____"
+G="_AAAA_|AA____|AA_AAA|AA__AA|_AAAA_"
+H="AA__AA|AA__AA|AAAAAA|AA__AA|AA__AA"
+I="AAAA|_AA_|_AA_|_AA_|AAAA"
+J="___AAA|____AA|____AA|AA__AA|_AAAA_"
+K="AA__AA|AA_AA_|AAAA__|AA_AA_|AA__AA"
+L="AA____|AA____|AA____|AA____|AAAAAA"
+M="AA___AA|AAA_AAA|AAAAAAA|AA_A_AA|AA___AA"
+N="AA__AA|AAA_AA|AAAAAA|AA_AAA|AA__AA"
+O="_AAAA_|AA__AA|AA__AA|AA__AA|_AAAA_"
+P="AAAAAA|AA__AA|AAAAAA|AA____|AA____"
+Q="_AAAA_|AA__AA|AA__AA|AA_AAA|_AAAA_"
+R="AAAAA_|AA__AA|AAAAAA|AA_AA_|AA__AA"
+S="_AAAAA|AA____|_AAAA_|____AA|AAAAA_"
+T="AAAAAA|__AA__|__AA__|__AA__|__AA__"
+U="AA__AA|AA__AA|AA__AA|AA__AA|_AAAA_"
+V="AA__AA|AA__AA|AA__AA|_AAAA_|__AA__"
+W="AA___AA|AA_A_AA|AAAAAAA|AAA_AAA|AA___AA"
+X="AA__AA|_AAAA_|__AA__|_AAAA_|AA__AA"
+Y="AA__AA|AA__AA|_AAAA_|__AA__|__AA__"
+Z="AAAAAA|___AA_|__AA__|_AA___|AAAAAA"
+INDENT="________|________|________|________|________"
+COLON="__|::|__|::|__"
+COMMA="__|__|__|::|_:"
+EXCLEMATION="::|::|::|__|::"
+PERIOD="__|__|__|__|::"
+SEMICOLON="__|::|__|::|_:"
+SPACE="__|__|__|__|__"
+NEWLINE="NEWLINE"
+SPACE_WIDTH=2
+LINE_HEIGHT=$(awk -F\| '{ print NF }' <<<${COLON})
+LOCAL_TIMEZONE=$(awk -F'"' '/ZONE=/ { print $2 }' /etc/sysconfig/clock)
+initStrings() {
+    local string_name
+    for string_name in {0..9} {A..Z} ':' ',' '!' '.' ';' ' ' '>' $'\n'; do
+        case ${string_name} in
+            [a-z])  string_name=${string_name^^};;
+            :)      string_name=COLON;;
+            ,)      string_name=COMMA;;
+            !)      string_name=EXCLEMATION;;
+            .)      string_name=PERIOD;;
+            \;)     string_name=SEMICOLON;;
+            ' ')    string_name=SPACE;;
+            '>')    string_name=INDENT;;
+            $'\n')  string_name=NEWLINE;;
+        esac
+        string_names+=("${string_name}")
+        
+        local string
+        if [[ ${string_name} =~ [0-9] ]]; then
+            string=${NUM[${string_name}]}
+        else
+            string=${!string_name}
+        fi
+        local char_width=$(cut -f 1 -d '|' <<<${string})
+        char_width=${#char_width}
+        char_widths+=("${char_width}")
+        local movement='\\e['${char_width}'D\\e[1B'
+        # bash has memory leaks when using parameter substitution, so sed is employed instead
+        string=$(sed "s/\(#\+\)/\\${DC}\1\\${NC}/g;\
+                  s/\(A\+\)/\\${LC}\1\\${NC}/g;\
+                  s/\(:\+\)/\\${PC}\1\\${NC}/g;\
+                  s/_/ /g;\
+                  s/|/\\${movement}/g" <<<${string}
+            )
+        
+        strings+=("${string}")
+    done
+}
+screenSetup() {
+    # determine terminal size
+    dimensions=$(
+        tput -S <<-!
+            lines
+            cols
+        !
+    )
+    lines=${dimensions%%$'\n'*}
+    cols=${dimensions##*$'\n'}
+    # redraw screen if terminal dimensions change
+    if [[ ${dimensions} != ${dimensions_log} ]]; then
+        dimensions_log=${dimensions}
+        printf "\Ec" # clear terminal
+        tput civis
+    fi
+    # put the cursor in the correct position to center the clock in the terminal
+    start_row=$(( ( lines - HEIGHT ) / 2 ))
+    start_col=$(( ( cols - WIDTH ) / 2 ))
+    start_row=2
+    start_col=$(( SPACE_WIDTH + 1 ))
+    vert_offset=0
+    printf "\E[$(( start_row + vert_offset ));${start_col}f"
+    space_on_line=$(( cols - start_col ))
+}
+drawChar() {
+    local char="$1"
+    # translate string
+        case ${char} in
+                [a-z])  char=${char^^};;
+                :)      char=COLON;;
+                ,)      char=COMMA;;
+                !)      char=EXCLEMATION;;
+                .)      char=PERIOD;;
+                \;)     char=SEMICOLON;;
+                ' ')    char=SPACE;;
+        '>')    char=INDENT;;
+                $'\n')  char=NEWLINE;;
+        esac
+    local i
+    for (( i=0; ${i} < ${#string_names[@]}; i++ )); do
+        if [[ "${string_names[${i}]}" == "${char}" ]]; then
+            local string="${strings[${i}]}"
+            local char_width=${char_widths[${i}]}
+            break
+        fi
+    done
+    # newline check
+    if [[ ${char_width} -gt ${space_on_line} || ${string} == "NEWLINE" ]]; then
+        (( vert_offset+=$(( LINE_HEIGHT + 1 )) ))
+        printf "\E[$(( start_row + vert_offset ));${start_col}f"
+        space_on_line=$(( cols - start_col ))
+        [[ ${string} == "NEWLINE" ]] && return
+    fi
+    # after the formatted character, and move cursor right and up to prepare for next character
+    printf "${string}\e[${SPACE_WIDTH}C\e[4A"
+    # keep track of remaining space on the current line
+    (( space_on_line-=$(( ${char_width} + ${SPACE_WIDTH} )) ))
+}
+printString() {
+    local string="${@}"
+    while [[ ${string} ]]; do
+        # print the first character in ${string}
+        local char="${string:0:1}"
+        drawChar "${char}"
+        # remove the character we printed from ${string}
+        string="${string:1}"
+    done
+}
+getDate() {
+    local TZ
+    if [[ ! ${@} ]]; then
+        local date_string="%I:%M:%S"
+        TZ=${LOCAL_TIMEZONE} date +"${date_string}"
+    else
+        local date_string="%H:%M:%S %Z"
+        TZ=${LOCAL_TIMEZONE} date +"${date_string}"
+        date_string="%I:%M %Z"
+        local i
+        for i in ${@}; do
+            printf ">"
+            TZ=${i} date +"${date_string}"
+        done
+    fi
+}
+end() {
+    # put cursor below any output, make it visibile, and exit
+    printf "\n%.s" $(eval echo {0..${LINE_HEIGHT}})
+    tput cvvis
+    exit
+}
+trap end SIGHUP SIGINT SIGTERM
+initStrings
+# Main Loop
+while sleep ${delay:-0}; do
+    screenSetup
+    date="$(getDate ${TIMEZONES})"
+    printString "${@:-${date}}"
+    [[ ${@} ]] && end
+    # determine how long to sleep before the next update
+    nanoseconds=10#$(date +%N)
+    delay=0.$(( 1000000000 - ${nanoseconds} ))
+done
