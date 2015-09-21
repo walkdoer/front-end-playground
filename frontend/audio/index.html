@@ -25,13 +25,13 @@ var audio = document.getElementById('audio');
 
 document.getElementById('start').addEventListener('click', function () {
   audio.play();
-  //fadeIn(audio);
+  fadeIn(audio);
 });
 
 document.getElementById('pause').addEventListener('click', function () {
-  //fadeOut(audio, function () {
+  fadeOut(audio, function () {
   audio.pause();
-  //});
+  });
 });
 
 var factor = 0.01;
