@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>计算图片相似度</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <style type="text/css">
+    html,body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .result {
+      font-size:2rem;
+    }
+    </style>
+</head>
+<body>
+  <img id="g11" src="./testcase/g1-1.jpg" width="50%">
+  <img id="g12" src="./testcase/g1-1.jpg" width="50%">
+
+  <div id="result-1" class="result"></div>
+
+  <img id="g21" src="./testcase/g2-1.jpg" width="50%">
+  <img id="g22" src="./testcase/g2-2.jpg" width="50%">
+
+  <div id="result-2" class="result"></div>
+  <script type="text/javascript" src="./sim.js"></script>
+  <script type="text/javascript" src="./index.js"></script>
+</body>
+</html>
