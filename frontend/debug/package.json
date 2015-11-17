@@ -1,0 +1,14 @@
+{
+  "name": "my-debug",
+  "version": "1.0.0",
+  "description": "在项目中使用 `console.log`来输出调试信息是一个很常见的手段，但是要上线的时候，要进行排查，并删除console.log的代码，这是一个很痛苦的过程。",
+  "main": "debug.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "debug": "^2.2.0"
+  }
+}
