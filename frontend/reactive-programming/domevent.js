@@ -37,4 +37,4 @@ var $result = $('#result');
 
 var subMousemove = mousemove.subscribe(function (e) {
     $result.innerHTML = e.clientX + ', ' + e.clientY;
-})
+});
