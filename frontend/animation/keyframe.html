@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>KeyFrame</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../common.css">
+    <style type="text/css">
+        .slidein {
+          animation-duration: 2s;
+          animation-name: slidein;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
+        }
+
+        @keyframes slidein {
+          from {
+            margin-left: 100%;
+            width: 300%;
+          }
+
+
+          to {
+            margin-left: 0%;
+            width: 100%;
+          }
+        }
+
+
+        .fade {
+          width: 100px;
+          height: 100px;
+          background-color: #ccc;
+          animation-name: fade;
+          animation-duration: 2s;
+          animation-delay: 1s;
+          animation-iteration-count: infinite;
+          animation-timing-function: linear;
+          animation-direction: alternate;
+        }
+
+
+        @keyframes fade {
+          from {
+            opacity: 1;
+          }
+          to {
+            opacity: 0;
+          }
+        }
+
+        .square2circle{
+
+          width: 200px;
+          height: 200px;
+          background-color: coral;
+          animation: square-to-circle 2s 1s infinite alternate;
+        }
+
+        @keyframes square-to-circle {
+           0%  {
+              border-radius:0 0 0 0;
+              background:coral;
+              transform:rotate(0deg);
+            }
+            25%  {
+              border-radius:50% 0 0 0;
+              background:darksalmon;
+              transform:rotate(45deg);
+            }
+            50%  {
+              border-radius:50% 50% 0 0;
+              background:indianred;
+              transform:rotate(90deg);
+            }
+            75%  { 
+              border-radius:50% 50% 50% 0;
+              background:lightcoral;
+              transform:rotate(135deg);
+            }
+            100% {  
+              border-radius:50%;
+              background:darksalmon;
+              transform:rotate(180deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="watchme" class="slidein">The Caterpillar and Alice</div>
+<div class="fade"></div>
+<div class="square2circle"></div>
+
+<hr/>
+<ul id="output"></ul>
+</body>
+<script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+var e = document.getElementById("watchme");
+e.addEventListener("animationstart", listener, false);
+e.addEventListener("animationend", listener, false);
+e.addEventListener("animationiteration", listener, false);
+
+function listener(e) {
+  var l = document.createElement("li");
+  switch(e.type) {
+    case "animationstart":
+      l.innerHTML = "Started: elapsed time is " + e.elapsedTime;
+      break;
+    case "animationend":
+      l.innerHTML = "Ended: elapsed time is " + e.elapsedTime;
+      break;
+    case "animationiteration":
+      l.innerHTML = "New loop started at time " + e.elapsedTime;
+      break;
+  }
+  document.getElementById("output").appendChild(l);
+}
+
+</script>
+</html>
