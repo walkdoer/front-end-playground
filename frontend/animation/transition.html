@@ -1,13 +1,79 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Animaition</title>
+    <title>Transiton</title>
     <meta charset="utf-8">
     <style type="text/css">
+    .box {
+        border-style: solid;
+        border-width: 1px;
+        display: block;
+        width: 100px;
+        height: 100px;
+        background-color: #5E12FE;
+        -webkit-transition: width 2s, height 2s, background-color 2s, -webkit-transform 2s;
+        transition: width 2s, height 2s, background-color 2s, transform 2s;
+    }
+
+    .box:hover {
+        background-color: #FFCCCC;
+        width: 200px;
+        height: 200px;
+        transition-delay: 2s;
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+    .menuButton {
+      position: relative;
+      transition-property: background-color, color;
+      transition-duration: 1s;
+      transition-timing-function: ease-out;
+      text-align: left;
+      background-color: orange;
+      left: 5px;
+      top: 5px;
+      height: 26px;
+      color: white;
+      font-family: sans-serif;
+      font-size: 20px;
+      text-decoration: none;
+      box-shadow: 2px 2px 1px #f3e477;
+      padding: 2px 4px;
+    }
+
+    .menuButton:hover {
+      position: relative;
+      transition-property: background-color, color;
+      transition-duration: 0.4s;
+      transition-timing-function: ease-out;
+      background-color: green;
+      color: #FFF;
+      box-shadow: 2px 2px 5px #12FECC;
+    }
     </style>
 </head>
 <body>
-<a href="./transition.html">transition</a>
+
+<p>The box below combines transitions for: width, height, background-color, transform. Hover over the box to see these properties animated.</p>
+<div class="box"></div>
+<pre>
+    <code>
+    transition 相当于申明动画要如何变换
+    语法是：transition: <property> <duration> <timing-function> <delay>;
+    transform 是如何对物体进行变形操作，这个和transition是完全不同的东西
+    </code>
+</pre>
+
+
+<p> 高亮菜单 </p>
+
+<div class="sidebar">
+  <p><a class="menuButton" href="home">Home</a></p>
+  <p><a class="menuButton" href="about">About</a></p>
+  <p><a class="menuButton" href="contact">Contact Us</a></p>
+  <p><a class="menuButton" href="links">Links</a></p>
+</div>
 </body>
 <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script>
 <script type="text/javascript">
