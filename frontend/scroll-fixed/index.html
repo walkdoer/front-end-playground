@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Scroll Fixed</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../common.css">
+    <style type="text/css">
+    body{
+        padding: 10px;
+    }
+    ul, li {    list-style: none; margin:0; padding: 0;}
+    .list {
+        width: 100%;
+    }
+    .list .item{
+        width: 100%;
+        border: 1px solid #000;
+        border-bottom: 0;
+    }
+    .list .item:last-child{
+        border-bottom: 1px solid #000;
+    }
+    .list .item .title{
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        background-color: orange;
+        color: #FFF;
+        border-bottom: 1px solid #000;
+    }
+
+    .list .item .content{
+        padding: 10px;
+    }
+    </style>
+</head>
+<body>
+<ul class="list">
+    <li id="item1" class="item">
+        <div class="title">标题1</div>
+        <div class="content">An extension for Google Analytics’s JavaScript tracking code, enabling outbound link and form tracking, URL change tracking for SPAs, media query tracking, and more.An extension for Google Analytics’s JavaScript tracking code, enabling outbound link and form tracking, <br>URL change tracking for SPAs, media query tracking, and more.An extension for Google Analytics’s JavaScript tracking code, enabling outbound link and form tracking, URL change tracking for SPAs, media query tracking, and more.An extension for Google Analytics’s JavaScript tracking code, enabling outbound link and <br>form tracking, URL change tracking for SPAs, media query tracking, and more.An extension for Google Analytics’s JavaScript tracking code, enabling outbound link and form tracking, URL change tracking for SPAs, media query tracking, and more.</div>
+    </li>
+    <li id="item2" class="item">
+        <div class="title">标题1</div>
+        <div class="content">ios下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题os下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题os下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题os下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题</div>
+    </li>
+    <li id="item3" class="item">
+        <div class="title">标题1</div>
+        <div class="content">ios下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题os下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题os下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题os下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题</div>
+    </li>
+
+</ul>
+</body>
+<script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+var slice = [].slice;
+var items = document.querySelectorAll('.item');
+var docEl = document.documentElement;
+items = slice.call(items, 0);
+//获取用户相对于页面的位置
+function getElementLeft(element) {
+    var actualLeft = element.offsetLeft;
+    var current = element.offsetParent;
+    while (current !== null){
+        actualLeft += current.offsetLeft;
+        current = current.offsetParent;
+    }
+    return actualLeft;
+}
+//获取用户相对于页面的位置
+function getElementTop(element){
+    var actualTop = element.offsetTop;
+    var current = element.offsetParent;
+    while (current !== null){
+        actualTop += current.offsetTop;
+        current = current.offsetParent;
+    }
+    return actualTop;
+}
+
+function getElementViewLeft(element) {　　　　
+    var actualLeft = element.offsetLeft;　　　　
+    var current = element.offsetParent;　　　　
+    while (current !== null) {　　　　　　
+        actualLeft += current.offsetLeft;
+        current = current.offsetParent;　　　　
+    }
+    var elementScrollLeft = getScrollLeft();
+    return actualLeft - elementScrollLeft;
+}　　
+
+function getScrollTop() {
+    return (window.pageYOffset || docEl.scrollTop)  - (docEl.clientTop || 0);
+}
+
+function getScrollLeft() {
+    return (window.pageXOffset || docEl.scrollLeft) - (docEl.clientLeft || 0);
+}
+function getElementViewTop(element) {　　　　
+    var actualTop = element.offsetTop;　　　　
+    var current = element.offsetParent;　　　　
+    while (current !== null) {　　　　　　
+        actualTop += current.offsetTop;　　　　　　
+        current = current.offsetParent;　　　　
+    }　　　　
+    var elementScrollTop = getScrollTop();
+    return actualTop - elementScrollTop;　　
+}
+window.addEventListener('scroll', function(e) {
+    console.log('window.scrollY:' + window.scrollY);
+    items.forEach(function (item) {
+        console.log(item.id + ' : (' + getElementViewTop(item) + ',' + getElementViewLeft(item) + ')');
+    });
+});
+</script>
+</html>
