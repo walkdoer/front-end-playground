@@ -11,6 +11,7 @@
     ul, li {    list-style: none; margin:0; padding: 0;}
     .list {
         width: 100%;
+        position: relative;
     }
     .list .item{
         width: 100%;
@@ -28,6 +29,19 @@
         color: #FFF;
         border-bottom: 1px solid #000;
     }
+    .list .fixed-title{
+        position: fixed;
+        display: none;
+        height: 50px;
+        top:  0;
+        left: 10px;
+        right: 8px;
+        text-align: center;
+        line-height: 50px;
+        background-color: orange;
+        color: #FFF;
+        border: 1px solid #000;
+    }
 
     .list .item .content{
         padding: 10px;
@@ -35,17 +49,19 @@
     </style>
 </head>
 <body>
+
 <ul class="list">
+    <div class="fixed-title"></div>
     <li id="item1" class="item">
         <div class="title">标题1</div>
         <div class="content">An extension for Google Analytics’s JavaScript tracking code, enabling outbound link and form tracking, URL change tracking for SPAs, media query tracking, and more.An extension for Google Analytics’s JavaScript tracking code, enabling outbound link and form tracking, <br>URL change tracking for SPAs, media query tracking, and more.An extension for Google Analytics’s JavaScript tracking code, enabling outbound link and form tracking, URL change tracking for SPAs, media query tracking, and more.An extension for Google Analytics’s JavaScript tracking code, enabling outbound link and <br>form tracking, URL change tracking for SPAs, media query tracking, and more.An extension for Google Analytics’s JavaScript tracking code, enabling outbound link and form tracking, URL change tracking for SPAs, media query tracking, and more.</div>
     </li>
     <li id="item2" class="item">
-        <div class="title">标题1</div>
+        <div class="title">标题2</div>
         <div class="content">ios下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题os下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题os下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题os下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题</div>
     </li>
     <li id="item3" class="item">
-        <div class="title">标题1</div>
+        <div class="title">标题3</div>
         <div class="content">ios下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题os下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题os下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题os下面UC浏览器无法自动播放，而其他客户端大部分也无法自动播放<br>android下视频层级是最高的，所以无法在视频上展示任何元素，ios则没有此问题</div>
     </li>
 
@@ -54,7 +70,8 @@
 <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script>
 <script type="text/javascript">
 var slice = [].slice;
-var items = document.querySelectorAll('.item');
+var items = document.querySelectorAll('.item .title');
+var fixedTitle = document.querySelector('.list .fixed-title');
 var docEl = document.documentElement;
 items = slice.call(items, 0);
 //获取用户相对于页面的位置
@@ -106,11 +123,31 @@ function getElementViewTop(element) {　　　　
     var elementScrollTop = getScrollTop();
     return actualTop - elementScrollTop;　　
 }
+
+function getFixedItem(items) {
+    var item, top;
+    for (var i = 0; i < items.length; i++) {
+        item = items[i];
+        top = getElementViewTop(item);
+        if (top >= 0) {
+            break;
+        }
+    }
+    if (i > 0) {
+        return items[i - 1];
+    }
+    return null;
+}
+
 window.addEventListener('scroll', function(e) {
-    console.log('window.scrollY:' + window.scrollY);
-    items.forEach(function (item) {
-        console.log(item.id + ' : (' + getElementViewTop(item) + ',' + getElementViewLeft(item) + ')');
-    });
+    var item = getFixedItem(items);
+    if (item) {
+        fixedTitle.style.display = 'block';
+        fixedTitle.innerHTML = item.innerText;
+    } else {
+        fixedTitle.style.display = 'none';
+        fixedTitle.innerHTML = '';
+    }
 });
 </script>
 </html>
