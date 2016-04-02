@@ -1,0 +1,69 @@
+.bar.red .bar-face, .bar.red[aria-valuenow='0'] .face-position.right {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+/* line 29, ../scss/component.scss */
+.bar.red .face-position.left, .bar.red[aria-valuenow='100'] .face-position.right {
+  background-color: rgba(236, 0, 113, 0.2);
+}
+/* line 34, ../scss/component.scss */
+.bar.red[aria-valuenow='100'] .face-position.right {
+  transition-delay: 0.5s;
+}
+/* line 38, ../scss/component.scss */
+.bar.red .face-position.floor.volume-lights {
+  box-shadow: 0 -0.2em 1em rgba(0, 0, 0, 0.15), 0 0.2em 0.1em -5px rgba(0, 0, 0, 0.3), 0 -0.75em 1.75em rgba(254, 254, 254, 0.6);
+}
+/* line 45, ../scss/component.scss */
+.bar.red .percentage:before {
+  background-color: rgba(236, 0, 113, 0.5);
+}
+/* line 49, ../scss/component.scss */
+.bar.red .volume-lights.shine:before {
+  box-shadow: 0 1.6em 3em rgba(236, 0, 113, 0.25);
+}
+/* line 56, ../scss/component.scss */
+.bar.red:not(.has-colors)[aria-valuenow] .face-position {
+  background-color: rgba(68, 68, 68, 0.6);
+}
+/* line 60, ../scss/component.scss */
+.bar.red:not(.has-colors) .percentage:before {
+  background-color: transparent;
+}
+/* line 64, ../scss/component.scss */
+.bar.red:not(.has-colors) .volume-lights.shine:before {
+  box-shadow: 0 1.6em 3em rgba(236, 0, 113, 0);
+}
+
+/* line 120, ../scss/custom-bars.scss */
+.bar.heat-gradient .face-position.left {
+  background-color: rgba(241, 196, 15, 0.8);
+}
+/* line 124, ../scss/custom-bars.scss */
+.bar.heat-gradient .percentage:before {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ec545b+0,ec5799+100 */
+  background-color: rgba(241, 196, 15, 0.8);
+  /* Old browsers */
+  background: -moz-linear-gradient(left, rgba(241, 196, 15, 0.8) 0%, rgba(236, 0, 113, 0.6) 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(241, 196, 15, 0.8)), color-stop(100%, rgba(236, 0, 113, 0.6)));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, rgba(241, 196, 15, 0.8) 0%, rgba(236, 0, 113, 0.6) 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, rgba(241, 196, 15, 0.8) 0%, rgba(236, 0, 113, 0.6) 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, rgba(241, 196, 15, 0.8) 0%, rgba(236, 0, 113, 0.6) 100%);
+  /* IE10+ */
+  background: linear-gradient(to right, rgba(241, 196, 15, 0.8) 0%, rgba(236, 0, 113, 0.6) 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color1', endColorstr='$color2',GradientType=1 );
+  /* IE6-9 */
+  background-size: 16em;
+}
+/* line 136, ../scss/custom-bars.scss */
+.bar.heat-gradient .volume-lights.shine:before {
+  box-shadow: -2em 1.6em 3em -1em rgba(241, 196, 15, 0.3), 2em 1.6em 3em -1em rgba(236, 0, 113, 0.3);
+}
+/* line 140, ../scss/custom-bars.scss */
+.bar.heat-gradient[valuenow="100"] .face-position.right {
+  background-color: rgba(236, 0, 113, 0.6);
+}
