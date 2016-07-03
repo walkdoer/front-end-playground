@@ -1,0 +1,16 @@
+{
+  "name": "virtual-dom",
+  "version": "1.0.0",
+  "description": "验证virtual-dom的可行性",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --content-base build/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "qs.js": "^0.1.12",
+    "snabbdom": "^0.5.0"
+  }
+}
