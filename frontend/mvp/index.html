@@ -39,11 +39,6 @@ body {
 <script src="./core/model.js"></script>
 <script src="./core/view.js"></script>
 <script>
-  /*
-    在简陋版本的MVC模式实例代码中，用户点击按钮，controller 通过调用model的方法改变数据，然后再调用view.render 进行界面的更新；
-    简单的demo场景都觉得代码写起来太麻烦了，所以接下来进行优化，减少编码成本。
-    接下来的改造方法为：引入事件通知，controller改变数据层model之后，model通过事件通知View层进行改变。
-  */
   class CounterModel extends Model {
     constructor(props) {
       super(props);
@@ -82,7 +77,6 @@ body {
       this.model.set({ value: this.model.get('value') - 1 });
     }
   }
-
 
   document.addEventListener('DOMContentLoaded', () => {
     const app = new CounterController();
