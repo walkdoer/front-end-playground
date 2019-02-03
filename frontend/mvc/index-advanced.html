@@ -1,0 +1,101 @@
+<html lang="en">
+<head>
+<title>MVC</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Cache-Control" content="no-cache">
+<style>
+* {
+    font-size:12px;
+    font-family:宋体, Arial;
+}
+body {
+    overflow:auto;
+}
+
+.counter{
+  width: 100px;
+  padding: 10px;
+  background: #FEFEFE;
+  border: 1px solid #ECECEC;
+  margin: 50px auto;
+}
+.number{
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  height: 60px;
+  line-height: 60px;
+}
+.btn-grp{
+  text-align: center;
+}
+.btn {
+  font-size: 20px;
+  text-align: center;
+  width: 45px;
+}
+</style>
+<script src="./core/events.js"></script>
+<script src="./core/model.js"></script>
+<script src="./core/view.js"></script>
+<script>
+  /*
+    在简陋版本的MVC模式实例代码中，用户点击按钮，controller 通过调用model的方法改变数据，然后再调用view.render 进行界面的更新；
+    简单的demo场景都觉得代码写起来太麻烦了，所以接下来进行优化，减少编码成本。
+    接下来的改造方法为：引入订阅者模式，model 数据改变后，通知View层进行改变。
+  */
+  class CounterModel extends Model {
+    constructor(props) {
+      super(props);
+      this.set({ value: 10 });
+    }
+  }
+  
+  class CounterView extends View {
+    render() {
+      this.$el.querySelector('.number').innerText = this.model.get('value');
+    }
+  }
+
+  class CounterController {
+    constructor() {
+      this.model = new CounterModel();
+      this.view = new CounterView({
+        model: this.model,
+        el: '#counter',
+      });
+      this.$increaseBtn = document.querySelector('.js-increase');
+      this.$subtractBtn = document.querySelector('.js-subtract');
+      this.bindEvents();
+    }
+  
+    bindEvents() {
+      this.$increaseBtn.addEventListener('click', this.handleIncrease.bind(this));
+      this.$subtractBtn.addEventListener('click', this.handleSubtract.bind(this));
+    }
+
+    handleIncrease() {
+      this.model.set({ value: this.model.get('value') + 1 });
+    }
+
+    handleSubtract() {
+      this.model.set({ value: this.model.get('value') - 1 });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const app = new CounterController();
+  });
+  
+</script>
+</head>
+<body>
+  <div id="counter" class="counter">
+    <div class="number">0</div>
+    <div class="btn-grp">
+      <button class="btn js-increase"> + </button>
+      <button class="btn js-subtract"> - </button>
+    </div>
+  </div>
+</body>
+</html>

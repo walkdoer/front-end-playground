@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+<title>MVC</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Cache-Control" content="no-cache">
+<style>
+* {
+    font-size:12px;
+    font-family:宋体, Arial;
+}
+body {
+    overflow:auto;
+}
+
+.counter{
+  width: 100px;
+  padding: 10px;
+  background: #FEFEFE;
+  border: 1px solid #ECECEC;
+  margin: 50px auto;
+}
+.number{
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  height: 60px;
+  line-height: 60px;
+}
+.btn-grp{
+  text-align: center;
+}
+.btn {
+  font-size: 20px;
+  text-align: center;
+  width: 45px;
+}
+</style>
+<script>
+
+  /**
+   * MVC 模式 将系统分为 Model，View，Controller 3层，目的是将数据业务逻辑，与UI层解绑，由于低耦合，系统的可维护性和复用性都得到了提升。
+   * Model: 数据层是系统的核心，负责数据的管理和业务逻辑；
+   * View: 负责渲染界面；
+   * Controller: 负责监听View层的输入，操作Model层的数据；
+   * 
+   * BackBone 是对这个模式的一个实现，当然Backbone的View层承担的是传统MVC模式中的View和Controller两层，[详细可参见Backbone的文档介绍](http://backbonejs.org/#FAQ-mvc)
+   */
+
+  /* 下面这个版本MVC模式的简陋实现，仅是为了说明 MVC 分层的大概方式 */
+  // model
+  const model = {
+    value: 10,
+    increase () {
+      if (this.value > 100) {
+        return;
+      }
+      this.value++;
+    },
+    subtract() {
+      if (this.value <= 0) {
+        return;
+      }
+      this.value--;
+    }
+  };
+
+  // view
+  const view = {
+    render(data) {
+      const $num = document.querySelector('.number');
+      $num.innerText = data.value;
+    }
+  }
+
+  // controller
+
+  const controller = {
+    init() {
+      this.$increaseBtn = document.querySelector('.js-increase');
+      this.$subtractBtn = document.querySelector('.js-subtract');
+      this.bindEvent();
+    },
+
+    bindEvent() {
+      this.$increaseBtn.addEventListener('click', this.handleIncrease);
+      this.$subtractBtn.addEventListener('click', this.handleSubtract);
+    },
+
+    handleIncrease: () => {
+      model.increase();
+      view.render(model);
+    },
+
+    handleSubtract: () => {
+      model.subtract();
+      view.render(model);
+    }
+  }
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // render view
+    view.render(model);
+    // init controller
+    controller.init();
+  });
+</script>
+</head>
+<body>
+  <div id="counter" class="counter">
+    <div class="number">0</div>
+    <div class="btn-grp">
+      <button class="btn js-increase"> + </button>
+      <button class="btn js-subtract"> - </button>
+    </div>
+  </div>
+</body>
+</html>
