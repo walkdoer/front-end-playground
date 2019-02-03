@@ -40,9 +40,8 @@ body {
 <script src="./core/view.js"></script>
 <script>
   /*
-    在简陋版本的MVC模式实例代码中，用户点击按钮，controller 通过调用model的方法改变数据，然后再调用view.render 进行界面的更新；
-    简单的demo场景都觉得代码写起来太麻烦了，所以接下来进行优化，减少编码成本。
-    接下来的改造方法为：引入事件通知，controller改变数据层model之后，model通过事件通知View层进行改变。
+  在 index-advanced.html 中，View 和 Controller 是分离的，view 层只剩下render
+  所以将 view 和 Controller 合并在一起也是没有问题的，代码组织更加紧凑.
   */
   class CounterModel extends Model {
     constructor(props) {
@@ -51,18 +50,11 @@ body {
     }
   }
   
-  class CounterView extends View {
-    render() {
-      this.$el.querySelector('.number').innerText = this.model.get('value');
-    }
-  }
-
-  class CounterController {
+  class CounterViewController extends View {
     constructor() {
-      this.model = new CounterModel();
-      this.view = new CounterView({
-        model: this.model,
+      super({
         el: '#counter',
+        model: new CounterModel(),
       });
       this.$increaseBtn = document.querySelector('.js-increase');
       this.$subtractBtn = document.querySelector('.js-subtract');
@@ -81,11 +73,13 @@ body {
     handleSubtract() {
       this.model.set({ value: this.model.get('value') - 1 });
     }
+    render() {
+      this.$el.querySelector('.number').innerText = this.model.get('value');
+    }
   }
 
-
   document.addEventListener('DOMContentLoaded', () => {
-    const app = new CounterController();
+    const app = new CounterViewController();
   });
   
 </script>
