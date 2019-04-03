@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Animaition</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"> 
+    <link rel="stylesheet" type="text/css" href="../common.css">
+    <style type="text/css">
+    body {padding: 10px;}
+    .box{
+        display: block;
+        margin: 0px auto;
+        background: #F04E14;
+        padding: 10px auto;
+        text-align: center;
+        width: 200px;
+        height: 200px;
+        margin-top: 200px;
+    }
+    .animated {
+      animation-duration: 2s;
+      animation-fill-mode: both;
+      transform-origin: center bottom;
+    }
+    .animated.infinited {
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes Box{
+      0% {
+        transform: translate3d(0,0,0) scale(1,1);
+        animation-timing-function: cubic-bezier(0.09, 0.63, 0.64, 0.96);
+      }
+      10% {
+        transform: translate3d(0,0,0) scale(1.1, .9);
+        animation-timing-function: cubic-bezier(0.08, 0.53, 0.47, 0.92);
+      }
+      30% {
+        transform: translate3d(0,-140px,0) scale(.9, 1.1);
+        animation-timing-function: cubic-bezier(0.68, 0.07, 0.85, 0.59);
+      }
+      50% {
+        transform: translate3d(0,0,0) scale(1.1, .9);
+        /* animation-timing-function: cubic-bezier(0.62, 0, 0.62, 0.4); */
+      }
+      57%  {
+        transform: translate3d(0,-7px,0) scale(.9, 1.1);
+      }
+      64%  {
+        transform: translate3d(0,0,0) scale(1, 1);
+      }
+      70%  {
+        transform: translate3d(0,-3px,0) scale(1.05, 0.95);
+      }
+      76%  {
+        transform: translate3d(0,0,0) scale(1, 1);
+      }
+      100% {
+        /* animation-timing-function: cubic-bezier(0.09, 0.6, 0.33, 0.97); */
+        transform: translate3d(0, 0 ,0) scale(1,1);
+      }
+    }
+
+
+    .bounce {
+      animation-name: Box;
+      transform-origin: bottom;
+    }
+    </style>
+</head>
+<body>
+
+<div class="box animated infinited bounce"></div>
+
+<div>Title 1</div>
+<div>This is a subtitle</div>
+</body>
+<script type="text/javascript">
+</script>
+</html>
