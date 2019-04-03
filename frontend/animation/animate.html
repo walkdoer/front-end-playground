@@ -66,6 +66,33 @@
       animation-name: Box;
       transform-origin: bottom;
     }
+    .text {
+      text-align: center;
+      height: 80px;
+      line-height: 80px;
+      border: 1px solid #CCC;
+      margin: auto 5px;
+      overflow: hidden;
+    }
+
+    @keyframes Vanish {
+      from {
+        opacity: 1;
+      }
+      to {
+        height: 0;
+        opacity: 0;
+      }
+    }
+    .vanish {
+      animation-duration: 1s;
+      animation-name: Vanish;
+      transform-origin: top center;
+    }
+    #hide-btn {
+      background: indianred;
+      color: #FFF;
+    }
     </style>
 </head>
 <body>
@@ -73,8 +100,17 @@
 <div class="box animated infinited bounce"></div>
 
 <div>Title 1</div>
-<div>This is a subtitle</div>
+<div>This is a subtitle <button id="hide-btn">hide</button></div>
+<div class="text">test message</div>
+<div>This is some text, lots of content here lots of content here lots of content here lots of content here</div>
 </body>
 <script type="text/javascript">
+document.querySelector('#hide-btn').addEventListener('click', () => {
+  const $el = document.querySelector('.text');
+  $el.classList.add('animated', 'vanish');
+  setTimeout(() => {
+    // $el.style.display = 'none';
+  }, 1000);
+});
 </script>
 </html>
