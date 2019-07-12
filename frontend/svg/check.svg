@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-59.000000, -767.000000)">
+            <g class="checkbox" transform="translate(59.000000, 767.000000)">
+                <circle class="checkbox-circle" id="Oval-33" fill="#7ED321" cx="15" cy="15" r="15"></circle>
+                <polygon class="checkbox-check" id="Combined-Shape" fill="#FFFFFF" fill-rule="nonzero" points="12.7405804 17.9660571 8.76496107 13.9989326 7 15.7601224 10.9756194 19.7272469 12.7405804 21.4884366 14.5055415 19.7272469 23.6512488 10.7611898 21.8862878 9"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

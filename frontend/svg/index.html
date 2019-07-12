@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Animaition</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<h1>paste svg code in html</h1>
+<pre><code>
+  使用内联SVG有个好处，就是可以自定义svg的样式
+  .checkbox-circle{
+    fill: orange;
+  }
+  .checkbox-circle:hover{
+    fill: orange;
+  }
+
+</code></pre>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-59.000000, -767.000000)">
+            <g class="checkbox" transform="translate(59.000000, 767.000000)">
+                <circle class="checkbox-circle" id="Oval-33" fill="#7ED321" cx="15" cy="15" r="15"></circle>
+                <polygon class="checkbox-check" id="Combined-Shape" fill="#FFFFFF" fill-rule="nonzero" points="12.7405804 17.9660571 8.76496107 13.9989326 7 15.7601224 10.9756194 19.7272469 12.7405804 21.4884366 14.5055415 19.7272469 23.6512488 10.7611898 21.8862878 9"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
+<h1>use img tag</h1>
+<img src="./check.svg" />
+
+<h1>use background-image </h1>
+<div class="bg"></div>
+
+<style>
+  .bg {
+    width: 130px;
+    height: 130px;
+    background-image: url(./check.svg);
+    background-size: 30px 30px;
+  }
+  .checkbox-circle{
+    fill: orange;
+  }
+  .checkbox-circle:hover{
+    fill: blue;
+  }
+</style>
+</body>
+</html>
