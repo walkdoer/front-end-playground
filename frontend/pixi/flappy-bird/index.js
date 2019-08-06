@@ -3,6 +3,8 @@ const { Sprite, utils, Application, Rectangle, Container, Graphics, TextStyle, T
 const bird1 = './images/bird-1.png';
 const bird2 = './images/bird-2.png';
 const bird3 = './images/bird-3.png';
+const PIPE_TOP = 'pipe-top';
+const PIPE_BOTTOM = 'pipe-bottom';
 
 //The `keyboard` helper function
 function keyboard(keyCode) {
@@ -47,6 +49,7 @@ if(!utils.isWebGLSupported()){
 
 utils.sayHello(type);
 
+
 //Create a Pixi Applidinosaurion
 let app = new Application({
   width: window.innerWidth,
@@ -55,6 +58,7 @@ let app = new Application({
   transparent: false, 
   resolution: 1
 });
+
 app.renderer.backgroundColor = 0x061639;
 //Add the canvas that Pixi automatically created for you to the HTML document
 document.body.appendChild(app.view);
@@ -66,7 +70,9 @@ window.addEventListener("resize", function() {
   app.renderer.resize(window.innerWidth, window.innerHeight);
 });
 
-
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 const loader = app.loader;
 const resources = loader.resources;
@@ -78,6 +84,8 @@ loader
   .add('bird2', bird2)
   .add('bird3', bird3)
   .add('city', './images/bg-tile.png')
+  .add(PIPE_TOP, './images/pipe-top.png')
+  .add(PIPE_BOTTOM, './images/pipe-bottom.png')
   .on("progress", loadProgressHandler)
   .load(setup);
 
@@ -88,53 +96,130 @@ function loadProgressHandler(loader, resource) {
   console.log(`progress: ${loader.progress} %`); 
 }
 
-let gameScene;
-let city;
+class Bird {
+  constructor(config) {
+    const arr = [
+      TextureCache['bird1'],
+      TextureCache['bird2'],
+      TextureCache['bird3'],
+    ];
+    // create animated sprite, so the bird can have fly animation.
+    let sprite = new PIXI.extras.AnimatedSprite(arr); 
+    sprite.height = 27 * 2.5;
+    sprite.width = 38 * 2.5;
+    sprite.x = (config.width - sprite.width) / 2
+    sprite.y = (config.height - sprite.height) / 2;
+    //设置动画精灵的速度
+    sprite.animationSpeed=0.1;
+    this.sprite = sprite;
+  }
 
+  fly() {
+    this.sprite.play();
+  }
+}
+
+class Landscape {
+  constructor(config) {
+    const cityTexture = TextureCache['city'];
+    const width = cityTexture.baseTexture.width;
+    const height = cityTexture.baseTexture.height;
+    const sprite = new PIXI.extras.TilingSprite(cityTexture,
+      config.width,
+      config.height
+    );
+    sprite.tileScale.set(config.width / width, config.height / height);
+    sprite.tilePosition.x = 0;
+    sprite.tilePosition.y = 0;
+    this.sprite = sprite;
+  }
+
+  move(speed) {
+    this.sprite.tilePosition.x -= speed;
+  }
+}
+
+
+let gameScene;
+let landscape;
+let pipes = [];
+
+
+class Pipe {
+  constructor(config) {
+    const texture = TextureCache[config.pipeType];
+    const sprite = new Sprite(texture);
+    sprite.height = config.height;
+    sprite.width = config.width;
+    sprite.position.set(config.x, config.y);
+    this.sprite = sprite;
+  }
+
+  move(speed) {
+    this.sprite.x -= speed;
+  }
+}
 
 function setup() {
-  console.log('set up');
+  const gameConfig = {
+    pipeNumber: 2,
+    maxGap: 800,
+    minGap: 400,
+    pipeWidth: 150,
+    minPipeHeight: 400,
+    pipeDistance: 300,
+    bottomGap: 100,
+  };
   gameScene = new Container();
   app.stage.addChild(gameScene);
-  // 创建城市背景
-  const cityTexture = TextureCache['city'];
-  console.log(cityTexture.baseTexture.width, cityTexture.baseTexture.height)
-  city = new PIXI.extras.TilingSprite(cityTexture,
-    window.innerWidth,
-    window.innerHeight
-  );
-  city.tileScale.set(window.innerWidth / cityTexture.baseTexture.width, window.innerHeight / cityTexture.baseTexture.height);
-  city.tilePosition.x = 0;
-  city.tilePosition.y = 0;
-  gameScene.addChild(city);
+  const fullScreenWH = { width: app.screen.width, height: app.screen.height };
+  const stageArea = {x: 0 , y: 0, width: fullScreenWH.width, height: fullScreenWH.height - 50 };
+  // create game's background landscape
+  landscape = new Landscape(fullScreenWH);
+  // crate bird;
+  bird = new Bird(fullScreenWH);
+  // add landscape to game scene
+  gameScene.addChild(landscape.sprite);
+  // add bird to game scene
+  gameScene.addChild(bird.sprite);
+  bird.fly();
 
-  
-  const arr = [
-    TextureCache['bird1'],
-    TextureCache['bird2'],
-    TextureCache['bird3'],
-  ];
-  //创建动画精灵
-  let pixie = new PIXI.extras.AnimatedSprite(arr); 
-  pixie.height = 27 * 3;
-  pixie.width = 38 * 3;
-  //设置动画精灵的速度
-  pixie.animationSpeed=0.1;
-  //把动画精灵添加到舞台
-  app.stage.addChild(pixie);
-  //播放动画精灵
-  pixie.play();
-
+  for (let index = 0; index < gameConfig.pipeNumber; index++) {
+    const gap = randomInt(gameConfig.minGap, gameConfig.maxGap);
+    const remainHeight = stageArea.height - gap;
+    const topHeight = randomInt(gameConfig.minPipeHeight, remainHeight);
+    const bottomHeight = remainHeight - topHeight;
+    const topPipe = new Pipe({
+      pipeType: PIPE_TOP,
+      height: topHeight,
+      width: gameConfig.pipeWidth,
+      x: gameConfig.pipeDistance * (index + 1),
+      y: 0
+    });
+    const bottomPipe = new Pipe({
+      pipeType: PIPE_BOTTOM,
+      height: bottomHeight,
+      width: gameConfig.pipeWidth,
+      x: gameConfig.pipeDistance * (index + 1),
+      y: stageArea.height - bottomHeight,
+    });
+    pipes.push(topPipe);
+    pipes.push(bottomPipe);
+    gameScene.addChild(topPipe.sprite);
+    gameScene.addChild(bottomPipe.sprite);
+  }
   state = play;
-
   app.ticker.add(delta => gameLoop(delta));
 }
 
 function gameLoop(delta){
-  //Move the cat 1 pixel 
   state(delta);
 }
 
 function play() {
-  city.tilePosition.x -= 1;
+  const speed = 1.5;
+  landscape.move(speed);
+  for (let index = 0; index < pipes.length; index++) {
+    pipes[index].move(speed);
+  }
 }
