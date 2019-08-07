@@ -155,59 +155,72 @@ class Pipe {
     this.sprite = sprite;
   }
 
+  get x () { return this.sprite.x; }
+  get y () { return this.sprite.y; }
+
   move(speed) {
     this.sprite.x -= speed;
   }
+
+  outOfState() {
+    return this.sprite.x + this.sprite.width < 0;
+  }
 }
 
-function setup() {
-  const gameConfig = {
-    pipeNumber: 2,
-    maxGap: 800,
-    minGap: 400,
-    pipeWidth: 150,
-    minPipeHeight: 400,
-    pipeDistance: 300,
-    bottomGap: 100,
-  };
+function createPipePair(gameConfig, stageArea, prevPipe) {
+  const gap = randomInt(gameConfig.minGap, gameConfig.maxGap);
+  const remainHeight = stageArea.height - gap;
+  const topHeight = randomInt(gameConfig.minPipeHeight, remainHeight);
+  const bottomHeight = remainHeight - topHeight;
+  const newX = gameConfig.pipeDistance + (prevPipe ? prevPipe.top.x : 0);
+  const topPipe = new Pipe({
+    pipeType: PIPE_TOP,
+    height: topHeight,
+    width: gameConfig.pipeWidth,
+    x: newX,
+    y: 0
+  });
+  const bottomPipe = new Pipe({
+    pipeType: PIPE_BOTTOM,
+    height: bottomHeight,
+    width: gameConfig.pipeWidth,
+    x: newX,
+    y: stageArea.height - bottomHeight,
+  });
+  return { top: topPipe, bottom: bottomPipe };
+};
+const gameConfig = {
+  pipeNumber: 8,
+  maxGap: 800,
+  minGap: 400,
+  pipeWidth: 150,
+  minPipeHeight: 400,
+  pipeDistance: 300,
+  bottomGap: 100,
+};
+const fullScreenWH = { width: app.screen.width, height: app.screen.height };
+const stageArea = {x: 0 , y: 0, width: fullScreenWH.width, height: fullScreenWH.height - 50 };
+
+function setup() {  
   gameScene = new Container();
+  gameScene.sortableChildren = true;
   app.stage.addChild(gameScene);
-  const fullScreenWH = { width: app.screen.width, height: app.screen.height };
-  const stageArea = {x: 0 , y: 0, width: fullScreenWH.width, height: fullScreenWH.height - 50 };
   // create game's background landscape
   landscape = new Landscape(fullScreenWH);
   // crate bird;
   bird = new Bird(fullScreenWH);
   // add landscape to game scene
   gameScene.addChild(landscape.sprite);
+  // create Pipes
+  for (let index = 0; index < gameConfig.pipeNumber; index++) {
+    const pipePair = createPipePair(gameConfig, stageArea, pipes[index - 1]);
+    pipes.push(pipePair);
+    gameScene.addChild(pipePair.top.sprite);
+    gameScene.addChild(pipePair.bottom.sprite);
+  }
   // add bird to game scene
   gameScene.addChild(bird.sprite);
   bird.fly();
-
-  for (let index = 0; index < gameConfig.pipeNumber; index++) {
-    const gap = randomInt(gameConfig.minGap, gameConfig.maxGap);
-    const remainHeight = stageArea.height - gap;
-    const topHeight = randomInt(gameConfig.minPipeHeight, remainHeight);
-    const bottomHeight = remainHeight - topHeight;
-    const topPipe = new Pipe({
-      pipeType: PIPE_TOP,
-      height: topHeight,
-      width: gameConfig.pipeWidth,
-      x: gameConfig.pipeDistance * (index + 1),
-      y: 0
-    });
-    const bottomPipe = new Pipe({
-      pipeType: PIPE_BOTTOM,
-      height: bottomHeight,
-      width: gameConfig.pipeWidth,
-      x: gameConfig.pipeDistance * (index + 1),
-      y: stageArea.height - bottomHeight,
-    });
-    pipes.push(topPipe);
-    pipes.push(bottomPipe);
-    gameScene.addChild(topPipe.sprite);
-    gameScene.addChild(bottomPipe.sprite);
-  }
   state = play;
   app.ticker.add(delta => gameLoop(delta));
 }
@@ -219,7 +232,20 @@ function gameLoop(delta){
 function play() {
   const speed = 1.5;
   landscape.move(speed);
+  let pop = false;
   for (let index = 0; index < pipes.length; index++) {
-    pipes[index].move(speed);
+    const pipePair = pipes[index];
+    pipePair.top.move(speed);
+    pipePair.bottom.move(speed);
+    if (pipePair.top.outOfState()) {
+      pop = true;
+    }
+  }
+  if (pop) {
+    pipes.shift();
+    const pipePair = createPipePair(gameConfig, stageArea, pipes[pipes.length - 1]);
+    pipes.push(pipePair);
+    gameScene.addChild(pipePair.top.sprite);
+    gameScene.addChild(pipePair.bottom.sprite);
   }
 }
