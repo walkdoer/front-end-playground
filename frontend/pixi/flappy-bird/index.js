@@ -98,6 +98,7 @@ function loadProgressHandler(loader, resource) {
 
 class Bird {
   constructor(config) {
+    this.raise = 0;
     const arr = [
       TextureCache['bird1'],
       TextureCache['bird2'],
@@ -105,8 +106,9 @@ class Bird {
     ];
     // create animated sprite, so the bird can have fly animation.
     let sprite = new PIXI.extras.AnimatedSprite(arr); 
-    sprite.height = 27 * 2.5;
-    sprite.width = 38 * 2.5;
+    sprite.height = 27;
+    sprite.width = 38;
+    sprite.scale.set(2,2);
     sprite.x = (config.width - sprite.width) / 2
     sprite.y = (config.height - sprite.height) / 2;
     //设置动画精灵的速度
@@ -116,6 +118,22 @@ class Bird {
 
   fly() {
     this.sprite.play();
+  }
+
+  die() {
+    this.sprite.stop();
+    this.sprite.anchor.y = 0.3;
+    this.sprite.anchor.x = -0.1;
+    this.sprite.rotation = 0.5;
+  }
+
+  drop() {
+    if (this.raise <= 20) {
+      this.sprite.y += -5;
+      this.raise += 5;
+    } else {
+      this.sprite.y += 15;
+    }
   }
 }
 
@@ -229,16 +247,26 @@ function gameLoop(delta){
   state(delta);
 }
 
+let birdHitPipe = false;
+let landScapeSpeed = 1.5;
 function play() {
-  const speed = 1.5;
-  landscape.move(speed);
+  landscape.move(landScapeSpeed);
+  if (birdHitPipe) {
+    bird.drop();
+  }
   let pop = false;
-  for (let index = 0; index < pipes.length; index++) {
+  for (let index = 0; !birdHitPipe && index < pipes.length; index++) {
     const pipePair = pipes[index];
-    pipePair.top.move(speed);
-    pipePair.bottom.move(speed);
+    pipePair.top.move(landScapeSpeed);
+    pipePair.bottom.move(landScapeSpeed);
     if (pipePair.top.outOfState()) {
       pop = true;
+    }
+    birdHitPipe = hitTestRectangle(bird.sprite, pipePair.top.sprite)
+      || hitTestRectangle(bird.sprite, pipePair.bottom.sprite);
+    if (birdHitPipe) {
+      landScapeSpeed = 0;
+      bird.die();
     }
   }
   if (pop) {
@@ -249,3 +277,44 @@ function play() {
     gameScene.addChild(pipePair.bottom.sprite);
   }
 }
+
+
+//The `hitTestRectangle` function
+function hitTestRectangle(r1, r2) {
+  //Define the variables we'll need to calculate
+  let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+  //hit will determine whether there's a collision
+  hit = false;
+  //Find the center points of each sprite
+  r1.centerX = r1.x + r1.width / 2; 
+  r1.centerY = r1.y + r1.height / 2; 
+  r2.centerX = r2.x + r2.width / 2; 
+  r2.centerY = r2.y + r2.height / 2; 
+  //Find the half-widths and half-heights of each sprite
+  r1.halfWidth = r1.width / 2;
+  r1.halfHeight = r1.height / 2;
+  r2.halfWidth = r2.width / 2;
+  r2.halfHeight = r2.height / 2;
+  //Calculate the distance vector between the sprites
+  vx = r1.centerX - r2.centerX;
+  vy = r1.centerY - r2.centerY;
+  //Figure out the combined half-widths and half-heights
+  combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+  combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+  //Check for a collision on the x axis
+  if (Math.abs(vx) < combinedHalfWidths) {
+    //A collision might be occuring. Check for a collision on the y axis
+    if (Math.abs(vy) < combinedHalfHeights) {
+      //There's definitely a collision happening
+      hit = true;
+    } else {
+      //There's no collision on the y axis
+      hit = false;
+    }
+  } else {
+    //There's no collision on the x axis
+    hit = false;
+  }
+  //`hit` will be either `true` or `false`
+  return hit;
+};
