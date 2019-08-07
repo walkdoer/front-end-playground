@@ -11,16 +11,30 @@ function keyboard(keyCode) {
   var key = {};
   key.code = keyCode;
   key.press = undefined;
+  key.isDown = false;
   //The `downHandler`
   key.pressHandler = function(event) {
     if (event.keyCode === key.code) {
       if (key.press) key.press();
+      key.isDown = true;
     }
     event.preventDefault();
   };
+  key.upHandler = function(event) {
+    if (event.keyCode === key.code) {
+      if (key.isDown && key.release) {
+        key.release();
+        key.isDown = false;
+      }
+    }
+    event.preventDefault();
+  }
   //Attach event listeners
   window.addEventListener(
     "keypress", key.pressHandler.bind(key), false
+  );
+  window.addEventListener(
+    "keyup", key.upHandler.bind(key), false
   );
   return key;
 }
@@ -97,6 +111,12 @@ class Bird {
     //设置动画精灵的速度
     sprite.animationSpeed=0.1;
     this.sprite = sprite;
+    this.sprite.anchor.y = 0.3;
+    this.sprite.anchor.x = -0.1;
+  }
+
+  rotate(angle) {
+    this.sprite.rotation = angle;
   }
 
   fly() {
@@ -106,14 +126,13 @@ class Bird {
   die() {
     if (!this.dead) {
       this.sprite.stop();
-      this.sprite.anchor.y = 0.3;
-      this.sprite.anchor.x = -0.1;
-      this.sprite.rotation = 0.5;
+      this.rotate(0.5);
       this.dead = true;
     }
     this.drop(10);
   }
-  up(speed) {
+  flyUp(speed) {
+    this.rotate(-0.2);
     this.sprite.y -= speed;
   }
   drop(speed) {
@@ -232,7 +251,12 @@ function initKeyboard() {
   const space = keyboard(32);
   space.press = () => {
     if (!birdHitPipe) {
-      bird.up(50);
+      bird.flyUp(50);
+    }
+  }
+  space.release = () => {
+    if (!birdHitPipe) {
+      bird.rotate(0);
     }
   }
 }
