@@ -10,34 +10,17 @@ const PIPE_BOTTOM = 'pipe-bottom';
 function keyboard(keyCode) {
   var key = {};
   key.code = keyCode;
-  key.isDown = false;
-  key.isUp = true;
   key.press = undefined;
-  key.release = undefined;
   //The `downHandler`
-  key.downHandler = function(event) {
+  key.pressHandler = function(event) {
     if (event.keyCode === key.code) {
-      if (key.isUp && key.press) key.press();
-      key.isDown = true;
-      key.isUp = false;
-    }
-    event.preventDefault();
-  };
-  //The `upHandler`
-  key.upHandler = function(event) {
-    if (event.keyCode === key.code) {
-      if (key.isDown && key.release) key.release();
-      key.isDown = false;
-      key.isUp = true;
+      if (key.press) key.press();
     }
     event.preventDefault();
   };
   //Attach event listeners
   window.addEventListener(
-    "keydown", key.downHandler.bind(key), false
-  );
-  window.addEventListener(
-    "keyup", key.upHandler.bind(key), false
+    "keypress", key.pressHandler.bind(key), false
   );
   return key;
 }
@@ -121,19 +104,20 @@ class Bird {
   }
 
   die() {
-    this.sprite.stop();
-    this.sprite.anchor.y = 0.3;
-    this.sprite.anchor.x = -0.1;
-    this.sprite.rotation = 0.5;
-  }
-
-  drop() {
-    if (this.raise <= 20) {
-      this.sprite.y += -5;
-      this.raise += 5;
-    } else {
-      this.sprite.y += 15;
+    if (!this.dead) {
+      this.sprite.stop();
+      this.sprite.anchor.y = 0.3;
+      this.sprite.anchor.x = -0.1;
+      this.sprite.rotation = 0.5;
+      this.dead = true;
     }
+    this.drop(10);
+  }
+  up(speed) {
+    this.sprite.y -= speed;
+  }
+  drop(speed) {
+    this.sprite.y += speed;
   }
 }
 
@@ -213,7 +197,7 @@ const gameConfig = {
   minGap: 400,
   pipeWidth: 150,
   minPipeHeight: 400,
-  pipeDistance: 300,
+  pipeDistance: 400,
   bottomGap: 100,
 };
 const fullScreenWH = { width: app.screen.width, height: app.screen.height };
@@ -239,8 +223,18 @@ function setup() {
   // add bird to game scene
   gameScene.addChild(bird.sprite);
   bird.fly();
+  initKeyboard();
   state = play;
   app.ticker.add(delta => gameLoop(delta));
+}
+
+function initKeyboard() {
+  const space = keyboard(32);
+  space.press = () => {
+    if (!birdHitPipe) {
+      bird.up(50);
+    }
+  }
 }
 
 function gameLoop(delta){
@@ -248,11 +242,13 @@ function gameLoop(delta){
 }
 
 let birdHitPipe = false;
-let landScapeSpeed = 1.5;
+let landScapeSpeed = 3;
 function play() {
   landscape.move(landScapeSpeed);
   if (birdHitPipe) {
-    bird.drop();
+    bird.die();
+  } else {
+    bird.drop(1);
   }
   let pop = false;
   for (let index = 0; !birdHitPipe && index < pipes.length; index++) {
